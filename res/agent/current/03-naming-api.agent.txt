@@ -1,3 +1,4 @@
+#!/usr/bin/env agent-fastpass
 #:: LIBAG_CONCERN[03/API] :: NAMING & API_SURFACE
 @ctx{id:03-naming-api, pair:03-naming-api.md, ns:libag_, doc:doc/CODE_STYLE.md}
 

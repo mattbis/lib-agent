@@ -1,3 +1,4 @@
+#!/usr/bin/env agent-fastpass
 #:: LIBAG_CONCERN[09/TPL] :: CANONICAL_TEMPLATES & ESLINT_AST_RULE
 @ctx{id:09-templates, pair:09-templates.md, doc:doc/template/libag_module_template.mjs}
 

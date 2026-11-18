@@ -1,3 +1,4 @@
+#!/usr/bin/env agent-fastpass
 #:: LIBAG_CONCERN[01/LIC] :: FREE_SOFTWARE & GPLv3_MANDATE
 @ctx{id:01-license-freesoftware, pair:01-license-freesoftware.md, root:LICENSE, spdx:GPL-3.0-or-later}
 
