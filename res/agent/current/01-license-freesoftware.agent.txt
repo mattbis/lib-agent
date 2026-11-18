@@ -1,0 +1,19 @@
+#:: LIBAG_CONCERN[01/LIC] :: FREE_SOFTWARE & GPLv3_MANDATE
+@ctx{id:01-license-freesoftware, pair:01-license-freesoftware.md, root:LICENSE, spdx:GPL-3.0-or-later}
+
+[AXIOM::FREE_SOFTWARE]
+ethos       :: "free as in freedom" |> preserve_4_freedoms(run, study, redistribute, modify)
+mandate     :: ALL(code, libs, tools, scripts, templates, channels) => RELEASE_AS(GNU_GPL_v3)
+root_file   :: `/LICENSE` == PRESENT && IMMUTABLE across {.dev, .main, .testing}
+pkg_json    :: `"license": "GPL-3.0-or-later"`
+
+[HEADER::SOURCE_STAMP]
+target      :: *.mjs | *.zig | *.sh | *.cmd
+stamp_line1 :: `// SPDX-License-Identifier: GPL-3.0-or-later`
+stamp_line2 :: `// Copyright (C) Matthew & Contributors — Free Software (GNU GPLv3)`
+
+[POLICY::3P_VENDORING]
+path        :: `src-mjs.dev/3p/<pkg>/`
+allow_lic   :: GPLv3_COMPAT_ONLY {GPL-3.0, LGPL-3.0, AGPL-3.0, Apache-2.0, MIT, BSD-2/3, ISC, MPL-2.0}
+forbid_lic  :: PROPRIETARY | NON_FREE | SOURCE_AVAILABLE_NON_COMMERCIAL | GPLv3_INCOMPAT
+provenance  :: retain upstream `LICENSE`/`COPYING` inside `src-mjs.dev/3p/<pkg>/`

@@ -1,0 +1,17 @@
+#:: LIBAG_CONCERN[03/API] :: NAMING & API_SURFACE
+@ctx{id:03-naming-api, pair:03-naming-api.md, ns:libag_, doc:doc/CODE_STYLE.md}
+
+[MATRIX::IDENTIFIERS]
+# kind          | pattern                       | canonical_examples
+file_mod        | `libag_<snake_case>.mjs`      | `libag_lifecycle.mjs`, `libag_worker_op.mjs`, `libag_arg.mjs`
+file_cls        | `libag_<PascalCase>.mjs`      | `libag_AgentWorkerClient.mjs`, `libag_AgentWorkerRuntime.mjs`
+file_seed       | `libag_<name>.0.mjs`          | `libag_config.0.mjs`, `libag_filter.0.mjs`, `libag_self_check.0.mjs`
+fn_export       | `<topic>_<action_snake_case>` | `volume_imprint()`, `volume_has_mask()`, `descenthash_compute_single()`
+
+[RULES::API_SHAPE]
+casing      :: STRICT `snake_case` for all lib fns/methods (!`camelCase`) |> visually separates JS runtime (`postMessage`, `Atomics.load`) from lib (`agent_dispatch_op`)
+topic_pfx   :: ~3_word coordinate prefix on exports for instant `grep` locality (!generic `imprint()`, `clear_mask()`)
+accessors   :: GO_STYLE_UNIFIED `foo(ctx, val)` |> !`get_foo` && !`set_foo`:
+               `if (val !== undefined) { ctx.flag= val; return val } return ctx.flag`
+dual_api    :: 1) STATELESS_FN_PRIMITIVES: `fn(ctx, ...)` or `step.call(ctx, opts)` (100% tree-shakeable, 0_alloc)
+               2) THIN_OOP_CLASS: ES `class` holding `#ctx`, delegating 1:1 to stateless primitives

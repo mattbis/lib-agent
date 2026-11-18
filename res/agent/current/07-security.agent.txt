@@ -1,0 +1,8 @@
+#:: LIBAG_CONCERN[07/SEC] :: RESIDENT_PROCESS_SECURITY & HARDENING
+@ctx{id:07-security, pair:07-security.md, doc:doc/security.md}
+
+[HARDENING::PROTOTYPE_AND_STATE]
+!01.null_proto  :: NEVER use `{}` for dynamic key/path caches |> ALWAYS `Object.create(null)` or `new Map()`
+!02.frozen_tbl  :: wrap ALL exported enums, flag masks, and OS command maps in `Object.freeze({...})`
+!03.safe_opts   :: NEVER `options.foo || def` |> ALWAYS `Object.hasOwn(options, 'foo')` or `arg_get_opt(options, 'foo', def)`
+!04.gate_auth   :: profile modifiers `{ +bg, +fg, +session, +gate, +send_debug }` |> verify tokens/PINs via constant-time `timingSafeEqual` (`node:crypto`)

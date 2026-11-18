@@ -1,0 +1,27 @@
+#:: LIBAG_CONCERN[05/TOP] :: REPOSITORY & CHANNEL_TOPOLOGY
+@ctx{id:05-topology, pair:05-topology.md, doc:doc/LIB_STRUCTURE.md}
+
+[FS_MAP::ROOT_TO_LEAF]
+LICENSE                         |> GNU GPLv3 Free Software license (mandatory, immutable)
+GEMINI.md | AGENTS.md           |> AI entry jump tables -> `doc/agent-jump-table.md` & `doc/.ai/`
+README.md                       |> overview, status, constraints, architecture
+eslint.config.mjs               |> flat config enforcing custom rules (`local/no-space-before-assignment`)
+.editorconfig                   |> strict 4-space indent across {.mjs, .zig, .md}
+src-mjs.{dev,main,testing}/     |> MJS channels: active dev | hardened prod | behavioral test suites
+  ├─ 3p/                        |> statically vendored GPLv3-compat external/WASM modules
+  ├─ ctor/                      |> core constructors (`libag_LibAgent.0.mjs`)
+  ├─ etc/                       |> static release config (`libag_config.0.mjs`)
+  ├─ lib/{arg,config,host,internal,os,session,worker}/ |> topic-grouped core modules
+  └─ main/                      |> entry orchestrators (`libag_main.mjs`)
+src-zig.{dev,main,testing}/     |> native Zig channels (high-speed streams/IPC)
+local/sh/                       |> CLI scripts — MUST use explicit `.sh` or `.cmd` extension
+local/tool/                     |> lockdown, gate PIN, release promotion tools
+var/build/                      |> compiled binaries & bundles (`.gitignore`d)
+res/agent/current/              |> modular concern specs (`.md` + `.agent.txt`)
+res/auto/antigravity/search.md  |> origin reference spec
+doc/agent-jump-table.md         |> canonical agent concern jump table
+doc/{.ai,.graveyard,maintainer,template}/ |> AI state, history, maintainer guides, module templates
+
+[INVARIANTS::FS]
+!stub_preservation :: empty files in `*.dev/` == intentional architectural placeholders |> NEVER delete during cleanup
+!channel_isolation :: never cross-import `.testing` into `.dev` or `.main`

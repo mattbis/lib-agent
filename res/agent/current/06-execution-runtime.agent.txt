@@ -1,0 +1,23 @@
+#:: LIBAG_CONCERN[06/EXE] :: EXECUTION_ARCHITECTURE & RUNTIME
+@ctx{id:06-execution-runtime, pair:06-execution-runtime.md, doc:doc/mjs_bitwise_quirks.md}
+
+[CONTROL_FLOW::DUAL_MODE]
+non_op_code     :: `invariant(cond, msg)` (`libag_invariant.mjs`) |> `!cond => throw new Error(msg)` (HARD_HALT)
+op_controlled   :: `run_operation(ctx, steps)` |> executes `step.call(ctx, opts)` in managed `try/catch`
+op_pipeline     :: `run_pre_op_check(ctx)` -> `steps[i]` (on transient err: `retry(ctx,err,n)` + `micro_pause.retry_backoff(n,ctx)`) -> `run_self_check(ctx)`
+coop_yield      :: `micro_pause.yield(ctx, reason)` |> profile_delays: `{ +bg: 10ms, +fg: 1ms, -nolimits: 0ms }`
+
+[MEMORY::ZERO_GC_AND_BITWISE]
+layout          :: pack node records & flags into flat `SharedArrayBuffer` / `Uint8Array` / `Int32Array` strides + `Atomics`; ZERO object/string allocation in hot loops
+bitwise_quirk   :: JS `| & ^ << >>` coerce to 32-bit signed int |> restrict bitwise ops to `Uint8Array`/`Int32Array` (`Atomics.or`, `Atomics.and`); use `BigUint64Array` + `Atomics.load/store` for 64-bit fields (`mtime`, `size`)
+parlance        :: `referrer` == pointer node | `referent` == backing target |> encode state bits in node `Flags` byte (!state_strings)
+
+[ISOLATES::WORKER_3_FILE_SPLIT]
+!rule           :: NEVER mix main-thread and worker-thread imports in one file; split `lib/worker/` into:
+  1. `libag_worker_op.mjs`          |> frozen `PROTOCOL_OP` + shared binary schemas
+  2. `libag_AgentWorkerClient.mjs`  |> main-thread isolate ONLY (`class AgentWorkerClient` + dispatch)
+  3. `libag_AgentWorkerRuntime.mjs` |> worker-thread isolate ONLY (`class AgentWorkerRuntime` + rx handlers)
+
+[TELEMETRY::2_TIER_LOG]
+tier_1_imut     :: `imut_log` / `stamp` |> ALWAYS_ON audit log (lifecycle, `os_executor`, `host_fingerprint()`); !high_freq_loops
+tier_2_user     :: CLI / `chalkpack` stream |> gated by runtime flags `{ +trace, +debug, +verbose, +send_debug }`

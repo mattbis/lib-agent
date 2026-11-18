@@ -1,0 +1,7 @@
+#:: LIBAG_CONCERN[08/TST] :: BEHAVIORAL & INVARIANT_TESTING
+@ctx{id:08-testing, pair:08-testing.md, doc:doc/TESTING.md}
+
+[VERIFY::PHILOSOPHY]
+!zero_throws    :: DO NOT write mock-heavy unit tests asserting thrown errors ("if low-level code throws, it is borked")
+harness         :: native `node --test` (`npm test`) against real or simulated end-to-end workflows
+targets         :: verify `SharedArrayBuffer` stride integrity, `0xAA` canary bytes, deterministic state transitions, and `imut_log` manifests

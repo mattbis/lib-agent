@@ -1,16 +1,30 @@
 # Antigravity Search: Coding Style & Architectural Conventions (`lib-agent`)
 
 #### status: reference specification
-#### fast-pass (AI agent): [`res/agent/current/rules-fastpass.txt`](../../../res/agent/current/rules-fastpass.txt)
+#### fast-pass index (AI agent): [`res/agent/current/rules-fastpass.agent.txt`](../../agent/current/rules-fastpass.agent.txt)
+#### human index (modular concerns): [`res/agent/current/rules-fastpass.md`](../../agent/current/rules-fastpass.md)
+#### jump table: [`doc/agent-jump-table.md`](../../../doc/agent-jump-table.md)
+#### license: GNU General Public License Version 3 (`GPLv3` — Free Software)
 
-This document captures the canonical coding style, repository organization, naming conventions, security hardening, and execution architecture for `lib-*` GitHub libraries (specifically tailored for `lib-agent` / prefix `libag_`).
+This document captures the canonical Free Software licensing policy, coding style, repository organization, naming conventions, security hardening, and execution architecture for `lib-*` GitHub libraries (specifically tailored for `lib-agent` / prefix `libag_`).
+
+For modular per-concern specifications (paired `.md` and `.agent.txt` files), see [`doc/agent-jump-table.md`](../../../doc/agent-jump-table.md) and [`res/agent/current/rules-fastpass.md`](../../agent/current/rules-fastpass.md).
+
+---
+
+## 0. Free Software & Licensing (`GPLv3`)
+
+- **Always Released as GNU GPL Version 3:**
+    - We are Free Software ("free as in freedom"). All code, libraries, tools, scripts, and templates across `lib-agent` and sibling `lib-*` repositories are **always released under the GNU General Public License Version 3 (`GPL-3.0-or-later`)**.
+    - Every repository maintains a root [`LICENSE`](../../../LICENSE) file and includes `// SPDX-License-Identifier: GPL-3.0-or-later` at the top of source files.
+    - Any statically vendored third-party (`3p`) code under `src-mjs.dev/3p/` must be Free Software under a license strictly compatible with GNU GPLv3. Non-free or proprietary dependencies are forbidden.
 
 ---
 
 ## 1. Core Syntax & Formatting (`doc/CODE_STYLE.md`)
 
 - **Asymmetric Assignment Spacing (`var x= val`):**
-  - Make the left-hand target of a declaration or assignment visually distinct by placing **no space before `=`** and **one space after `=`**:
+    - Make the left-hand target of a declaration or assignment visually distinct by placing **no space before `=`** and **one space after `=`**:
     ```javascript
     var x= true
     let count= 0
@@ -20,21 +34,21 @@ This document captures the canonical coding style, repository organization, nami
     }
     ```
 - **No Semicolons:**
-  - Omit semicolons everywhere (`semi: ["error", "never"]`).
+    - Omit semicolons everywhere (`semi: ["error", "never"]`).
 - **4-Space Indentation:**
-  - Strictly `4 spaces` across all `.mjs`, `.zig`, and config files (`indent: ["error", 4]`). Never use 2 spaces or tabs.
+    - Strictly `4 spaces` across all `.mjs`, `.zig`, `.md`, and config files (`indent: ["error", 4]`). Never use 2 spaces or tabs.
 - **Intelligent `var` vs. `const` / `let` Usage:**
-  - Prefer `var` in low-level hot paths where JS engine hoisting/function-scoping avoids unnecessary block-binding overhead in pure `.mjs`.
-  - Use `const` and `let` where execution semantics or immutability boundaries require explicit lexical scoping.
+    - Prefer `var` in low-level hot paths where JS engine hoisting/function-scoping avoids unnecessary block-binding overhead in pure `.mjs`.
+    - Use `const` and `let` where execution semantics or immutability boundaries require explicit lexical scoping.
 - **Ternary Formatting:**
-  - Prefer formatted multiline or chained ternaries over verbose `if / else` blocks when the expression is non-trivial. Align `?` and `:` at a 4-space indent:
+    - Prefer formatted multiline or chained ternaries over verbose `if / else` blocks when the expression is non-trivial. Align `?` and `:` at a 4-space indent:
     ```javascript
     var x= (cond)
         ? .5+(Math.cos(x*pi)*.5)*.5
         : 1-(Math.cos(x*pi)*.2)*Math.sin(x*pi)*(x*.22)+.22
     ```
 - **Column Alignment in Configs & Tables:**
-  - When authoring `.conf` files or tabular definitions (e.g., `# item, param1, param2`), align fields into clean vertical columns.
+    - When authoring `.conf` files or tabular definitions (e.g., `# item, param1, param2`), align fields into clean vertical columns.
 
 ---
 
@@ -49,23 +63,23 @@ Every file in the library is prefixed with the short library namespace (`libag_`
 ### Space-Prefixed `snake_case` Functions (Backwards/Topic Form)
 - **C/Python `snake_case` everywhere:** Never use `camelCase` for library functions or methods. Using `snake_case` makes it immediately obvious what is a JS runtime built-in (`postMessage`, `Atomics.load`) versus library code (`agent_dispatch_op`).
 - **Topic/Space Prefixing (~3 words):** Prefix exported functions with their module/topic coordinate so `grep` locates an entire functional group at once:
-  - Prefer `volume_imprint()`, `volume_has_mask()`, `descenthash_compute_single()`
-  - Avoid generic names like `imprint()`, `clear_mask()`, or `compute_single_hash()`
+    - Prefer `volume_imprint()`, `volume_has_mask()`, `descenthash_compute_single()`
+    - Avoid generic names like `imprint()`, `clear_mask()`, or `compute_single_hash()`
 
 ### Go-Style Unified Accessors (No `get_` / `set_`)
 - Do not write separate `get_foo()` and `set_foo(val)` methods.
 - Expose a single unified accessor `foo(val)`:
-  - If `val !== undefined`, mutate/store the state and return `val` (or `this`).
-  - If `val === undefined`, read and return the current state.
-  ```javascript
-  export function session_flag(ctx, val) {
-      if (val !== undefined) {
-          ctx.flag= val
-          return val
-      }
-      return ctx.flag
-  }
-  ```
+    - If `val !== undefined`, mutate/store the state and return `val` (or `this`).
+    - If `val === undefined`, read and return the current state.
+    ```javascript
+    export function session_flag(ctx, val) {
+        if (val !== undefined) {
+            ctx.flag= val
+            return val
+        }
+        return ctx.flag
+    }
+    ```
 
 ### Dual Surface API (Functional Primitives + Thin Class Wrappers)
 - **Stateless Functional Primitives:** Write canonical operational logic as standalone exported functions accepting explicit context (`ctx`) or bound via `thisArg` (`step.call(ctx, opts)`). This guarantees 100% tree-shaking and minimal execution overhead per operation.
@@ -78,6 +92,8 @@ Every file in the library is prefixed with the short library namespace (`libag_`
 All imports at the top of every `.mjs` file must be grouped and explicitly marked with `// 1p`, `// 2p`, and `// 3p` comments:
 
 ```javascript
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 // 1p
 import { timingSafeEqual } from 'node:crypto'
 import * as fs from 'node:fs/promises'
@@ -87,12 +103,12 @@ import { invariant } from '../internal/libag_invariant.mjs'
 import { arg_get_opt } from '../arg/libag_arg.mjs'
 
 // 3p
-// Statically vendored dependencies under src-mjs.dev/3p/<pkg>/ (avoid npm deps in prod)
+// Statically vendored GPLv3-compatible dependencies under src-mjs.dev/3p/<pkg>/ (avoid npm deps in prod)
 ```
 
 - **`1p` (First-Party):** Core language/runtime built-ins (`node:*` modules, Web APIs).
-- **`2p` (Second-Party):** Internal modules from this repository or your own sibling `lib-*` libraries.
-- **`3p` (Third-Party):** External code. Avoid external `node_modules` dependencies in production; when a third-party artifact (e.g., a WASM binary) is required, vendor it statically into `src-mjs.dev/3p/` to eliminate supply-chain attack vectors.
+- **`2p` (Second-Party):** Internal modules from this repository or your own sibling `lib-*` Free Software libraries.
+- **`3p` (Third-Party):** External code. Avoid external `node_modules` dependencies in production; when a third-party artifact (e.g., a WASM binary) is required, vendor it statically into `src-mjs.dev/3p/` to eliminate supply-chain attack vectors. All `3p` artifacts must be GPLv3-compatible Free Software.
 
 ---
 
@@ -102,13 +118,14 @@ Source code is strictly separated by **language** and **stability channel** rath
 
 ```text
 lib-agent/
+├── LICENSE                          # GNU General Public License v3 (Free Software)
 ├── GEMINI.md                        # Minimal root AI Jump Table (relative links to doc/.ai/)
 ├── AGENTS.md                        # Directs agents to read GEMINI.md
 ├── README.md                        # Project overview, status, constraints, and architecture
 ├── eslint.config.mjs                # Root flat config importing custom style rules
 ├── .editorconfig                    # 4-space indent rules for .mjs, .zig, .md
 ├── src-mjs.dev/                     # Active JS/MJS development channel
-│   ├── 3p/                          # Statically vendored external/WASM modules
+│   ├── 3p/                          # Statically vendored external/WASM modules (GPLv3-compatible)
 │   ├── ctor/                        # Core library constructors (libag_LibAgent.0.mjs)
 │   ├── etc/                         # Release-level static config (libag_config.0.mjs)
 │   ├── lib/                         # Core library modules grouped by space/topic
@@ -130,6 +147,9 @@ lib-agent/
 │   └── tool/                        # Local lockdown, gate PIN, and release promotion tools
 ├── var/
 │   └── build/                       # Compiled binaries & bundles (strictly .gitignored)
+├── res/
+│   ├── agent/current/               # Modular concern specs (.md & .txt) + rules-fastpass index
+│   └── auto/antigravity/            # Reference search & style specification (search.md)
 └── doc/
     ├── .ai/                         # AI memory, DESIGN_MOMENTUM.md, roadmaps (.gitignored)
     ├── .graveyard/                  # Archived ideas & deferred designs for historical context
@@ -142,7 +162,7 @@ lib-agent/
     └── security.md                  # Resident process hardening & lockdown specs
 ```
 
-- **GitHub Link Rule:** Every Markdown link across `README.md`, `GEMINI.md`, and `doc/` must use **relative repository paths** (e.g., `[doc/CODE_STYLE.md](doc/CODE_STYLE.md)`), never local machine `file:///` paths.
+- **GitHub Link Rule:** Every Markdown link across `README.md`, `GEMINI.md`, `res/`, and `doc/` must use **relative repository paths** (e.g., `[doc/CODE_STYLE.md](doc/CODE_STYLE.md)`), never local machine `file:///` paths.
 - **Empty Stub Files:** Empty files in `.dev` are intentional architectural placeholders for future code—do not delete them during cleanup passes unless explicitly instructed.
 
 ---
@@ -151,13 +171,13 @@ lib-agent/
 
 ### Invariants vs. Operation-Controlled Code
 1. **Non-Operation Code (Setup, Memory Accessors, Structural Checks):**
-   - Must use `invariant(cond, msg)` (`libag_invariant.mjs`).
-   - If `cond` fails, execution halts immediately (`throw new Error`).
+    - Must use `invariant(cond, msg)` (`libag_invariant.mjs`).
+    - If `cond` fails, execution halts immediately (`throw new Error`).
 2. **Operation-Controlled Code (`run_operation(ctx, steps)`):**
-   - Runs composed step functions via `thisArg` (`step.call(ctx, options)`) inside `try { ... } catch (err) { ... }`.
-   - Transient failures invoke `retry(ctx, err, attempt)` with `micro_pause.retry_backoff(attempt, ctx)`.
-   - Steps yield cooperatively via `micro_pause.yield(ctx, reason)` based on active profile modifiers (`+bg`: 10ms, `+fg`: 1ms, `-nolimits`: 0ms).
-   - Automatically runs `run_pre_op_check(ctx)` before execution and `run_self_check(ctx)` upon completion.
+    - Runs composed step functions via `thisArg` (`step.call(ctx, options)`) inside `try { ... } catch (err) { ... }`.
+    - Transient failures invoke `retry(ctx, err, attempt)` with `micro_pause.retry_backoff(attempt, ctx)`.
+    - Steps yield cooperatively via `micro_pause.yield(ctx, reason)` based on active profile modifiers (`+bg`: 10ms, `+fg`: 1ms, `-nolimits`: 0ms).
+    - Automatically runs `run_pre_op_check(ctx)` before execution and `run_self_check(ctx)` upon completion.
 
 ### Zero-GC Mechanical Sympathy & Bitwise Safety
 - **Binary-First Layouts:** Avoid object/string "slop" in hot loops. Pack node records and state flags into flat `SharedArrayBuffer` / `Uint8Array` / `Int32Array` strides with `Atomics` accessors.
@@ -172,10 +192,10 @@ Never mix main-thread and worker-thread imports in a single file. Split worker I
 
 ### Two-Tier Logging (`imut_log` vs. User Log)
 1. **Immutable Manifest (`imut_log` / `stamp`):**
-   - Non-negotiable, always-on low-level audit log.
-   - Records core lifecycle operations, OS-level commands (`os_executor`), and runtime/host fingerprints (`host_fingerprint()`). Never clutter `imut_log` with high-frequency timing loops.
+    - Non-negotiable, always-on low-level audit log.
+    - Records core lifecycle operations, OS-level commands (`os_executor`), and runtime/host fingerprints (`host_fingerprint()`). Never clutter `imut_log` with high-frequency timing loops.
 2. **User / CLI Log:**
-   - Streamed console / `chalkpack` output controlled by runtime flags (`+trace`, `+debug`, `+verbose`, `+send_debug`).
+    - Streamed console / `chalkpack` output controlled by runtime flags (`+trace`, `+debug`, `+verbose`, `+send_debug`).
 
 ---
 
@@ -198,141 +218,4 @@ Long-running resident processes must defend against prototype pollution and unau
 
 ## 8. Reference Templates
 
-### A. Canonical Module Template (`doc/template/libag_module_template.mjs`)
-
-```javascript
-/**
- * canonical module template (`libag_module_template.mjs`)
- * demonstrates strict project coding conventions, resident process prototype pollution defenses,
- * zero-GC mechanical sympathy, Go-style accessors, and the Dual Surface API (`1p/2p` pure).
- */
-
-// 1p
-import { timingSafeEqual } from 'node:crypto'
-
-// 2p
-import { invariant } from '../internal/libag_invariant.mjs'
-import { arg_get_opt } from '../arg/libag_arg.mjs'
-
-// 3p
-// (none - zero external npm dependencies in resident core)
-
-export const MODULE_TEMPLATE_FLAGS= Object.freeze({
-    cold: 0x01,
-    active: 0x02,
-    dirty: 0x04,
-    resident: 0x08
-})
-
-export function template_init_registry(options= {}) {
-    var opts= options || {}
-    var max_entries= arg_get_opt(opts, 'max_entries', 1024)
-    var profile= arg_get_opt(opts, 'profile', '+bg')
-
-    return {
-        cache: Object.create(null),
-        registry: new Map(),
-        state_flags: MODULE_TEMPLATE_FLAGS.cold,
-        max_entries: max_entries,
-        profile: profile
-    }
-}
-
-export function template_state_flags(ctx, val) {
-    invariant(ctx && typeof ctx === 'object', 'template_state_flags: valid ctx required')
-    if (val !== undefined) {
-        ctx.state_flags= val
-        return val
-    }
-    return ctx.state_flags
-}
-
-export class libag_ModuleTemplate {
-    #ctx
-
-    constructor(options= {}) {
-        this.#ctx= template_init_registry(options)
-    }
-
-    state_flags(val) {
-        return template_state_flags(this.#ctx, val)
-    }
-}
-```
-
-### B. Custom ESLint Style Rule (`libag-custom_eslint.mjs`)
-
-```javascript
-const no_space_before_assignment_rule= {
-    meta: {
-        type: 'layout',
-        fixable: 'whitespace',
-        messages: {
-            noSpaceBefore: "Expected no space before '{{operator}}'.",
-            spaceAfter: "Expected space after '{{operator}}'."
-        }
-    },
-    create(context) {
-        var source_code= context.sourceCode
-        function check(node, left, operator= '=') {
-            var token= source_code.getTokenAfter(left, (t) => t.value === operator)
-            if (!token) return
-
-            var prev_token= source_code.getTokenBefore(token)
-            var next_token= source_code.getTokenAfter(token)
-
-            var text_before= source_code.text.slice(prev_token.range[1], token.range[0])
-            if (text_before.length > 0) {
-                context.report({
-                    node: token,
-                    data: { operator },
-                    messageId: 'noSpaceBefore',
-                    fix(fixer) {
-                        return fixer.removeRange([prev_token.range[1], token.range[0]])
-                    }
-                })
-            }
-
-            var text_after= source_code.text.slice(token.range[1], next_token.range[0])
-            if (next_token && !text_after.includes('\n') && text_after.length === 0) {
-                context.report({
-                    node: token,
-                    data: { operator },
-                    messageId: 'spaceAfter',
-                    fix(fixer) {
-                        return fixer.insertTextAfter(token, ' ')
-                    }
-                })
-            }
-        }
-        return {
-            VariableDeclarator(node) {
-                if (node.init) check(node, node.id)
-            },
-            AssignmentExpression(node) {
-                check(node, node.left, node.operator)
-            }
-        }
-    }
-}
-
-export default [
-    {
-        files: ['**/*.mjs'],
-        plugins: {
-            local: {
-                rules: {
-                    'no-space-before-assignment': no_space_before_assignment_rule
-                }
-            }
-        },
-        rules: {
-            'indent': ['error', 4],
-            'semi': ['error', 'never'],
-            'camelcase': 'off',
-            'no-multi-spaces': 'error',
-            'local/no-space-before-assignment': 'error'
-        }
-    }
-]
-```
+See [`res/agent/current/09-templates.md`](../../agent/current/09-templates.md) and [`res/agent/current/09-templates.agent.txt`](../../agent/current/09-templates.agent.txt) for the canonical GPLv3 `.mjs` module template and custom ESLint rule.

@@ -1,0 +1,26 @@
+#!/usr/bin/env agent-fastpass
+#:: LIBAG_SPEC v2.1 :: MASTER_INDEX [TOK_OPT=MAX | FMT=AGENT_DSL]
+@meta{proj:lib-agent, ns:libag_, lic:GPL-3.0-or-later, ethos:FREE_SOFTWARE, root_lic:LICENSE}
+@refs{human:res/agent/current/rules-fastpass.md, jump:doc/agent-jump-table.md, origin:res/auto/antigravity/search.md}
+
+#:: JUMP_VECTOR [id | slot | agent_spec | human_spec | target_doc]
+01 | LIC  | res/agent/current/01-license-freesoftware.agent.txt | res/agent/current/01-license-freesoftware.md | LICENSE
+02 | SYN  | res/agent/current/02-syntax-style.agent.txt         | res/agent/current/02-syntax-style.md         | doc/CODE_STYLE.md
+03 | API  | res/agent/current/03-naming-api.agent.txt           | res/agent/current/03-naming-api.md           | doc/CODE_STYLE.md
+04 | DEP  | res/agent/current/04-dependencies.agent.txt         | res/agent/current/04-dependencies.md         | doc/LIB_STRUCTURE.md
+05 | TOP  | res/agent/current/05-topology.agent.txt             | res/agent/current/05-topology.md             | doc/LIB_STRUCTURE.md
+06 | EXE  | res/agent/current/06-execution-runtime.agent.txt    | res/agent/current/06-execution-runtime.md    | doc/mjs_bitwise_quirks.md
+07 | SEC  | res/agent/current/07-security.agent.txt             | res/agent/current/07-security.md             | doc/security.md
+08 | TST  | res/agent/current/08-testing.agent.txt              | res/agent/current/08-testing.md              | doc/TESTING.md
+09 | TPL  | res/agent/current/09-templates.agent.txt            | res/agent/current/09-templates.md            | doc/template/libag_module_template.mjs
+
+#:: KERNEL_AXIOMS [HARD_CONSTRAINTS — VIOLATION == HALT]
+!01.LIC :: code_release == ALWAYS(GPL-3.0-or-later) && spdx_hdr == REQUIRED && 3p_lic == GPLv3_COMPAT_FREE_SW && !proprietary
+!02.SYN :: assign == `lhs= rhs` (0_sp_pre, 1_sp_post) && semi == NEVER && indent == 4_SP && links == REL_PATH_ONLY(!file://)
+!03.API :: file == `libag_<snake|Pascal|name.0>.mjs` && fn == `<topic>_<snake>` (!camelCase) && get_set == `fn(ctx,val?)` && dual_api == fn_prim+thin_cls
+!04.DEP :: hdr_order == [// 1p, // 2p, // 3p] && prod_npm == ZERO && 3p_path == `src-mjs.dev/3p/<pkg>/`
+!05.TOP :: channels == {src-mjs,src-zig}.{dev,main,testing} && empty_dev_stubs == PRESERVE && scripts == explicit(.sh|.cmd)
+!06.EXE :: non_op == `invariant(c,m)` | op == `run_operation(ctx,steps)`+`micro_pause.yield` | mem == SAB+Atomics(0_GC) | worker == 3_file_split(op,Client,Runtime) | log == imut_log+user_log
+!07.SEC :: dict == `Object.create(null)`|`Map` (!`{}`) && const == `Object.freeze` && opt == `Object.hasOwn`|`arg_get_opt` (!`||`) && gate == `timingSafeEqual`
+!08.TST :: runner == `node --test` && expected_throws == ZERO && assert == behavioral(SAB_strides, 0xAA_canary, state_fsm, imut_log)
+!09.TPL :: enforce(`local/no-space-before-assignment`) && seed_from(`09-templates.agent.txt`)

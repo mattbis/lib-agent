@@ -1,0 +1,12 @@
+#:: LIBAG_CONCERN[04/DEP] :: DEPENDENCY_DISCIPLINE (1p / 2p / 3p)
+@ctx{id:04-dependencies, pair:04-dependencies.md, doc:doc/LIB_STRUCTURE.md}
+
+[TIERS::IMPORT_HEADER_ORDER]
+1 :: `// 1p` |> runtime built-ins ONLY (`node:crypto`, `node:fs/promises`, Web_APIs)
+2 :: `// 2p` |> internal repo modules or sibling `lib-*` GPLv3 libs (`../internal/libag_invariant.mjs`, `../arg/libag_arg.mjs`)
+3 :: `// 3p` |> statically vendored GPLv3-compatible Free Software under `src-mjs.dev/3p/<pkg>/`
+
+[CONSTRAINTS::SUPPLY_CHAIN]
+prod_npm        :: ZERO external `node_modules` in resident production core
+vendor_policy   :: static vendor into `src-mjs.dev/3p/<pkg>/` + verify GPLv3 license compatibility (see 01/LIC)
+header_mandate  :: every `.mjs` file MUST declare `// 1p`, `// 2p`, `// 3p` comment markers in exact sequence

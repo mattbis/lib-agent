@@ -1,0 +1,15 @@
+#:: LIBAG_CONCERN[02/SYN] :: CORE_SYNTAX & FORMATTING
+@ctx{id:02-syntax-style, pair:02-syntax-style.md, doc:doc/CODE_STYLE.md}
+
+[RULES::LEXICAL_LAYOUT]
+assign_op   :: ASYMMETRIC `lhs= rhs` |> 0_space_before(`=`), 1_space_after(`=`)
+               ex: `var x= true` | `let count= 0` | `function f(a= 1, b= null)`
+semicolons  :: NEVER |> eslint(`semi: ["error", "never"]`)
+indent      :: 4_SPACES_STRICT |> eslint(`indent: ["error", 4]`) across {.mjs, .zig, .md, .conf} && !2_sp && !tabs
+bindings    :: `var` => hot_paths/fn_scope (0_block_bind_overhead) | `const`/`let` => lexical_immutability_boundaries
+ternary     :: PREFER(multiline_chained_ternary) > verbose_if_else |> align `?` and `:` at +4_sp:
+               `var x= (cond)`
+               `    ? .5+(Math.cos(x*pi)*.5)*.5`
+               `    : 1-(Math.cos(x*pi)*.2)*Math.sin(x*pi)*(x*.22)+.22`
+col_align   :: vertical_align_columns in `.conf` & tabular comments (`# item, param1, param2`)
+md_links    :: RELATIVE_REPO_PATHS_ONLY (`[doc/CODE_STYLE.md](doc/CODE_STYLE.md)`) |> !`file:///`
