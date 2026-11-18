@@ -1,0 +1,196 @@
+# ==============================================================================
+# LIB-AGENT: AI AGENT FAST-PASS RULES & ARCHITECTURAL SPECIFICATION
+# ==============================================================================
+# status:       canonical-fastpass
+# schema:       libag-rules-v1
+# scope:        lib-* GitHub libraries (default prefix: libag_ for lib-agent)
+# human_ref:    res/agent/current/rules-fastpass.md
+# source_ref:   res/auto/antigravity/search.md
+# ==============================================================================
+
+[META]
+project         = lib-agent
+namespace       = libag_
+human_md_path   = res/agent/current/rules-fastpass.md
+full_spec_path  = res/auto/antigravity/search.md
+style_doc       = doc/CODE_STYLE.md
+structure_doc   = doc/LIB_STRUCTURE.md
+security_doc    = doc/security.md
+testing_doc     = doc/TESTING.md
+bitwise_doc     = doc/mjs_bitwise_quirks.md
+template_doc    = doc/template/libag_module_template.mjs
+
+# ------------------------------------------------------------------------------
+# 1. CORE SYNTAX & FORMATTING (STRICT ENFORCEMENT)
+# ------------------------------------------------------------------------------
+[SYNTAX]
+assignment_spacing  = asymmetric: NO space before '=', ONE space after '=' (`var x= val`, `a= 1`)
+semicolons          = NEVER (`semi: ["error", "never"]`)
+indentation         = 4 spaces strictly across .mjs, .zig, .md, and configs (`indent: ["error", 4]`)
+var_vs_const_let    = prefer `var` in low-level hot paths (avoids block-binding overhead); use `const`/`let` for lexical/immutability boundaries
+ternary_style       = prefer multiline/chained ternaries over verbose if/else; align `?` and `:` at 4-space indent
+table_alignment     = align fields into clean vertical columns in .conf files and tabular comments (`# item, param1, param2`)
+markdown_links      = relative repo paths ONLY (`[doc/CODE_STYLE.md](doc/CODE_STYLE.md)`); NEVER use `file:///`
+
+# ------------------------------------------------------------------------------
+# 2. NAMING & API SURFACE CONVENTIONS
+# ------------------------------------------------------------------------------
+[NAMING]
+# target_kind           | pattern                       | examples
+file_module             | libag_<snake_case>.mjs        | libag_lifecycle.mjs, libag_worker_op.mjs, libag_arg.mjs
+file_class              | libag_<PascalCase>.mjs        | libag_AgentWorkerClient.mjs, libag_AgentWorkerRuntime.mjs, libag_AbstractNode.mjs
+file_seeded_entry       | libag_<name>.0.mjs            | libag_config.0.mjs, libag_filter.0.mjs, libag_self_check.0.mjs
+function_identifier     | <topic>_<action_snake_case>   | volume_imprint(), volume_has_mask(), descenthash_compute_single()
+forbidden_naming        | NEVER camelCase for lib fns   | distinguishes JS built-ins (`postMessage`, `Atomics.load`) from lib code (`agent_dispatch_op`)
+accessor_pattern        | Go-style unified `foo(val)`   | NO `get_foo()` / `set_foo(val)`; `val === undefined` reads, `val !== undefined` writes & returns `val`
+api_surface             | Dual Surface (Fn + Class)     | 1) stateless functional primitives (`fn(ctx, ...)` or `step.call(ctx, opts)`) + 2) thin ES class wrappers delegating to primitives
+
+# ------------------------------------------------------------------------------
+# 3. DEPENDENCY DISCIPLINE (1p / 2p / 3p IMPORT GROUPS)
+# ------------------------------------------------------------------------------
+[DEPENDENCIES]
+header_order    = `// 1p` -> `// 2p` -> `// 3p` (explicitly marked at top of every .mjs file)
+tier_1p         = core runtime built-ins (`node:crypto`, `node:fs/promises`, Web APIs)
+tier_2p         = internal repo modules or sibling `lib-*` libraries (`../internal/libag_invariant.mjs`, `../arg/libag_arg.mjs`)
+tier_3p         = statically vendored artifacts under `src-mjs.dev/3p/<pkg>/`; ZERO external npm `node_modules` in resident production core
+
+# ------------------------------------------------------------------------------
+# 4. REPOSITORY & CHANNEL TOPOLOGY
+# ------------------------------------------------------------------------------
+[TOPOLOGY]
+# path                                  | role & rules
+GEMINI.md                               | minimal root AI Jump Table (relative links to doc/.ai/)
+AGENTS.md                               | directs agents to read GEMINI.md
+README.md                               | project overview, status, constraints, architecture
+eslint.config.mjs                       | root flat config importing custom style rules
+.editorconfig                           | 4-space indent rules for .mjs, .zig, .md
+src-mjs.dev/                            | active JS/MJS development channel (preserve empty stub files as intentional placeholders)
+src-mjs.dev/3p/                         | statically vendored external/WASM modules
+src-mjs.dev/ctor/                       | core library constructors (libag_LibAgent.0.mjs)
+src-mjs.dev/etc/                        | release-level static config (libag_config.0.mjs)
+src-mjs.dev/lib/arg/                    | CLI/options parsing & constant-time comparators
+src-mjs.dev/lib/config/                 | base constants & magic numbers (libag_constants.mjs)
+src-mjs.dev/lib/host/                   | runtime fingerprinting (Node, Bun, Deno)
+src-mjs.dev/lib/internal/               | invariants, self_check, op runner, ctx, stamp
+src-mjs.dev/lib/os/                     | OS abstraction (os_fs, os_executor, win/, nix/)
+src-mjs.dev/lib/session/                | lifecycle context sessions
+src-mjs.dev/lib/worker/                 | isolate-split Worker IPC (Client, Runtime, Op)
+src-mjs.dev/main/                       | entry orchestrators (libag_main.mjs)
+src-mjs.main/                           | hardened, production-ready MJS channel
+src-mjs.testing/                        | behavioral test suites & self-check harnesses
+src-zig.dev/                            | native Zig development channel (high-speed streams/IPC)
+src-zig.main/                           | production Zig channel
+src-zig.testing/                        | Zig verification suites
+local/sh/                               | CLI scripts (always explicit .sh or .cmd extensions)
+local/tool/                             | local lockdown, gate PIN, and release promotion tools
+var/build/                              | compiled binaries & bundles (strictly .gitignored)
+doc/.ai/                                | AI memory, DESIGN_MOMENTUM.md, roadmaps (.gitignored)
+doc/.graveyard/                         | archived ideas & deferred designs for historical context
+doc/maintainer/                         | maintainer guides, guard & promotion docs
+doc/template/                           | canonical module template (libag_module_template.mjs)
+res/auto/antigravity/search.md          | full human/reference coding style & architecture specification
+res/agent/current/rules-fastpass.md     | human-readable Markdown companion to rules-fastpass.txt
+res/agent/current/rules-fastpass.txt    | AI agent fast-parsing rule specification (this file)
+
+# ------------------------------------------------------------------------------
+# 5. EXECUTION ARCHITECTURE & RUNTIME RULES
+# ------------------------------------------------------------------------------
+[EXECUTION]
+non_op_code         = use `invariant(cond, msg)` (`libag_invariant.mjs`); halts immediately (`throw new Error`) on failure
+op_controlled_code  = `run_operation(ctx, steps)` executes `step.call(ctx, options)` inside `try/catch`
+op_lifecycle        = `run_pre_op_check(ctx)` -> steps with `retry(ctx, err, attempt)` & `micro_pause.retry_backoff(attempt, ctx)` -> `run_self_check(ctx)`
+cooperative_yield   = `micro_pause.yield(ctx, reason)` governed by profile modifiers (`+bg`: 10ms, `+fg`: 1ms, `-nolimits`: 0ms)
+zero_gc_layout      = pack node records & state flags into flat `SharedArrayBuffer` / `Uint8Array` / `Int32Array` strides with `Atomics` accessors; avoid object/string slop in hot loops
+bitwise_safety      = JS coerces `| & ^ << >>` to 32-bit signed int; restrict bitwise ops to `Uint8Array`/`Int32Array` views (`Atomics.or`, `Atomics.and`); use `BigUint64Array` + `Atomics.load`/`store` for 64-bit fields (`mtime`, `size`)
+link_parlance       = use `referrer` (pointer node) and `referent` (backing target); encode state bits into node `Flags` byte (no state strings)
+worker_isolation    = NEVER mix main-thread and worker-thread imports in one file; split across:
+                      1) `libag_worker_op.mjs` (frozen `PROTOCOL_OP` + shared binary schemas)
+                      2) `libag_AgentWorkerClient.mjs` (main-thread isolate only)
+                      3) `libag_AgentWorkerRuntime.mjs` (worker-thread isolate only)
+logging_tier_1      = `imut_log` / `stamp`: always-on immutable audit log (lifecycle ops, `os_executor`, `host_fingerprint()`); NEVER clutter with high-freq loops
+logging_tier_2      = User / CLI log: streamed console / `chalkpack` controlled by `+trace`, `+debug`, `+verbose`, `+send_debug`
+
+# ------------------------------------------------------------------------------
+# 6. RESIDENT PROCESS SECURITY & HARDENING
+# ------------------------------------------------------------------------------
+[SECURITY]
+null_proto_dicts    = NEVER use `{}` for dynamic key/path caches; ALWAYS use `Object.create(null)` or `new Map()`
+frozen_constants    = wrap all exported enums, flag masks, and OS command maps in `Object.freeze({...})`
+safe_option_read    = NEVER use `options.foo || default`; ALWAYS use `Object.hasOwn(options, 'foo')` or `arg_get_opt(options, 'foo', default)`
+profile_gating      = support `+`/`-` modifiers (`+bg`, `+fg`, `+session`, `+gate`, `+send_debug`) with constant-time `timingSafeEqual` PIN/token checks
+
+# ------------------------------------------------------------------------------
+# 7. BEHAVIORAL & INVARIANT TESTING
+# ------------------------------------------------------------------------------
+[TESTING]
+zero_expected_throws = do NOT write mock-heavy unit tests asserting thrown errors ("if low-level code throws, it is borked")
+behavioral_harness   = run via native `node --test` (`npm test`) on real/simulated workflows; verify `SharedArrayBuffer` strides, `0xAA` canary bytes, state transitions, and manifests
+
+# ------------------------------------------------------------------------------
+# 8. CANONICAL CODE PATTERNS (COPY-READY)
+# ------------------------------------------------------------------------------
+[PATTERN:MODULE_TEMPLATE]
+```javascript
+// 1p
+import { timingSafeEqual } from 'node:crypto'
+
+// 2p
+import { invariant } from '../internal/libag_invariant.mjs'
+import { arg_get_opt } from '../arg/libag_arg.mjs'
+
+// 3p
+// (none - zero external npm dependencies in resident core)
+
+export const MODULE_TEMPLATE_FLAGS= Object.freeze({
+    cold: 0x01,
+    active: 0x02,
+    dirty: 0x04,
+    resident: 0x08
+})
+
+export function template_init_registry(options= {}) {
+    var opts= options || {}
+    var max_entries= arg_get_opt(opts, 'max_entries', 1024)
+    var profile= arg_get_opt(opts, 'profile', '+bg')
+
+    return {
+        cache: Object.create(null),
+        registry: new Map(),
+        state_flags: MODULE_TEMPLATE_FLAGS.cold,
+        max_entries: max_entries,
+        profile: profile
+    }
+}
+
+export function template_state_flags(ctx, val) {
+    invariant(ctx && typeof ctx === 'object', 'template_state_flags: valid ctx required')
+    if (val !== undefined) {
+        ctx.state_flags= val
+        return val
+    }
+    return ctx.state_flags
+}
+
+export class libag_ModuleTemplate {
+    #ctx
+
+    constructor(options= {}) {
+        this.#ctx= template_init_registry(options)
+    }
+
+    state_flags(val) {
+        return template_state_flags(this.#ctx, val)
+    }
+}
+```
+
+[PATTERN:ESLINT_RULES]
+```javascript
+rules: {
+    'indent': ['error', 4],
+    'semi': ['error', 'never'],
+    'camelcase': 'off',
+    'no-multi-spaces': 'error',
+    'local/no-space-before-assignment': 'error'
+}
+```

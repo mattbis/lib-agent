@@ -1,6 +1,7 @@
 # Antigravity Search: Coding Style & Architectural Conventions (`lib-agent`)
 
 #### status: reference specification
+#### fast-pass (AI agent): [`res/agent/current/rules-fastpass.txt`](../../../res/agent/current/rules-fastpass.txt)
 
 This document captures the canonical coding style, repository organization, naming conventions, security hardening, and execution architecture for `lib-*` GitHub libraries (specifically tailored for `lib-agent` / prefix `libag_`).
 
@@ -231,7 +232,7 @@ export function template_init_registry(options= {}) {
     return {
         cache: Object.create(null),
         registry: new Map(),
-         state_flags: MODULE_TEMPLATE_FLAGS.cold,
+        state_flags: MODULE_TEMPLATE_FLAGS.cold,
         max_entries: max_entries,
         profile: profile
     }
