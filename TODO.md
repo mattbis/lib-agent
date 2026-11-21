@@ -10,10 +10,14 @@ Here are some rough guidelines on how these fit into my projects, both completed
 - Go
   - we will use mostly for applications that are highly efficient cli, networking and stuff like music governor
 - Rust
-  - we will use for highly memory controlled applications and runtimes. I am undecided about plugins but its easier doing clap with it than SDK Vst3
+  - we will use for highly memory controlled applications and runtimes. I am undecided about plugins but its easier doing clap with it than SDK Vst3. its suffering from the problem of npm / node so many packages, its almost impossible verify a supply chain that big, thats something i really don't like... 
 - Cplusplus
   - we will use across the board... but again we dislike huge projects since it can be a nightmare, and the language is almost like insanity since there are so many ways to do anything
 - zig
   - we will use for small components, that need the power of C but super performance. and I really like the ethos behind it
 
 For each language, we need to have solid rules for style... I like all code to be consistent and not a BULL OF MUD. Therefore the first task is to generalise the repo structure and to separate things into agnostic and common across programming.
+
+2. general notes about projects:-
+   - I don't like loads of dependencies.. I want to know what everything does, I prefer to old school static deps, and optimise them if necessary. I particularly dislike deps that are so small or often should be part of an Standard library, they are better marked as a 3p but static dep. I also don't have time to deal with CI pulling in stupid malware and stuff like that.. we dont care if stuff is old.. We code such that we are as sure as we can be it will work forever.. this is the aim.
+   - maintenance, always has a lot of phases, and lofty goals, stuff will get fixed, but it probably will take me awhile to get around to it. And a giant ton of PRs is not someting I want to spend any time doing.. people will fork but the problem with vibe coding is they dont know about prs and keeping a mainline - helping everyone, they just fork some old version modify it and then its probably got bad bugs.... hence by limiting the scope as much as possible - and keeping deps to the absolute minimum when that happens if they must do that ( also i dont think many new coders have any idea about how foss is supposed ot work ) they have a solid base... its all good but that is our aim.
