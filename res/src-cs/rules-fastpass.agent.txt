@@ -1,0 +1,18 @@
+#!/usr/bin/env agent-fastpass
+#:: LIBAG_CS_SPEC v3.0 :: SRC_CS_FASTPASS [TOK_OPT=MAX | FMT=AGENT_DSL]
+@meta{proj:lib-agent, lang:csharp, runtime:dotnet_8_9_native_aot, channels:src-cs|src-cs.dev|src-cs.main|src-cs.testing, ns:libag_, lic:GPL-3.0-or-later, build_out:var/build/cs}
+@refs{human:res/src-cs/rules-fastpass.md, lic_spec:res/agent/current/01-license-freesoftware.agent.txt, suggested:doc/suggested/cs-style.md, jump:doc/agent-jump-table.md}
+
+#:: JUMP_VECTOR [id | slot | agent_spec | human_spec | target_doc]
+01 | LIC  | res/agent/current/01-license-freesoftware.agent.txt | res/agent/current/01-license-freesoftware.md | LICENSE
+02 | ETH  | res/agent/current/02-architecture-ethos.agent.txt   | res/agent/current/02-architecture-ethos.md   | doc/TODO.md
+03 | TOP  | res/agent/current/03-topology-var.agent.txt         | res/agent/current/03-topology-var.md         | doc/agent-jump-table.md
+17 | CS   | res/src-cs/rules-fastpass.agent.txt                 | res/src-cs/rules-fastpass.md                 | doc/suggested/cs-style.md
+
+#:: KERNEL_AXIOMS [SRC_CS_CONSTRAINTS — VIOLATION == HALT]
+!01.LIC :: spdx_hdr == `// SPDX-License-Identifier: GPL-3.0-or-later` && csproj_lic == `GPL-3.0-or-later`
+!02.MOD :: nullable == `enable` && implicit_usings == `disable` && aot_compat == `true` && !reflection_di_soup
+!03.MEM :: hot_paths == `Span<T>`|`ReadOnlySpan<T>`|`readonly record struct` && monetary == `decimal`|`long_micros` (!`float`|!`double`)
+!04.DEP :: usings == [// 1p (`System.*`), // 2p (`LibAgent.*`), // 3p (static `src-cs.dev/3p/`)] && !nuget_sprawl
+!05.SYN :: indent == 4_SP && ns == file_scoped(`namespace LibAgent.*;`) && files == `Libag<PascalCase>.cs`
+!06.OUT :: `BaseOutputPath` & `BaseIntermediateOutputPath` == `var/build/cs/` (!scattered `bin/` or `obj/` in `src-cs*`)

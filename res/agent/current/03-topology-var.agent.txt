@@ -11,6 +11,7 @@ cpp     | src-cpp  | src-cpp.dev  | src-cpp.main  | src-cpp.testing  | cross-boa
 zig     | src-zig  | src-zig.dev  | src-zig.main  | src-zig.testing  | small C-power high-performance components
 java    | src-java | src-java.dev | src-java.main | src-java.testing | financial, messaging, AI, enterprise interop
 py3     | src-py3  | src-py3.dev  | src-py3.main  | src-py3.testing  | strictly bounded glue scripts (NEVER giant projects)
+cs      | src-cs   | src-cs.dev   | src-cs.main   | src-cs.testing   | modern .NET 8/9+ & NativeAOT, Span<T>, tooling & services
 
 [AXIOM::VAR_OUTPUT_DISCIPLINE]
 !no_root_splatter :: FORBID scattered `target/`, `build/`, `dist/`, `__pycache__/`, `.gradle/`, `zig-cache/` in repo root or `src-*`

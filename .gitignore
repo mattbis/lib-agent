@@ -18,5 +18,7 @@ zig-out/
 target/
 .gradle/
 build/
+bin/
+obj/
 CMakeFiles/
 CMakeCache.txt

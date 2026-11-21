@@ -22,6 +22,9 @@ Here are some rough guidelines on how these fit into my projects, both completed
 - zig
     - we will use for small components, that need the power of C but super performance. and I really like the ethos behind it
     - `src-zig`  `src-zig.dev` `src-zig.main`
+- C# / .NET
+    - modern .NET (8/9+ & NativeAOT) with `Span<T>`, value types, financial/messaging/tooling and cross-platform apps
+    - `src-cs`  `src-cs.dev` `src-cs.main`
 
 For each language, we need to have solid rules for style... I like all code to be consistent and not a BULL OF MUD. Therefore the first task is to generalise the repo structure and to separate things into agnostic and common across programming.
 

@@ -51,3 +51,4 @@ Never run a bare build tool that writes to the working directory. Always pass th
 - **Zig:** `zig build --cache-dir var/build/zig/cache --prefix var/build/zig/out`
 - **Java:** `javac -d var/build/java/classes ...`
 - **Python 3:** `PYTHONPYCACHEPREFIX=var/build/py3/pycache python3 ...`
+- **C# / .NET:** `dotnet build --artifacts-path var/build/cs` (or via root `Directory.Build.props`)

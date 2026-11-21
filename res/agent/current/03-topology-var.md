@@ -20,6 +20,7 @@ Never dump source files into a generic `src/` folder. Every language is isolated
 | **Zig** | `src-zig` | `src-zig.dev/` | `src-zig.main/` | `src-zig.testing/` | Small high-speed components needing C-level power & performance. |
 | **Java** | `src-java` | `src-java.dev/` | `src-java.main/` | `src-java.testing/` | Financial systems, messaging buses, AI & enterprise integrations. |
 | **Python 3** | `src-py3` | `src-py3.dev/` | `src-py3.main/` | `src-py3.testing/` | Strictly bounded glue scripts & automation (never giant monoliths). |
+| **C# / .NET** | `src-cs` | `src-cs.dev/` | `src-cs.main/` | `src-cs.testing/` | Modern .NET 8/9+ & NativeAOT, `Span<T>`, tooling, financial & services. |
 
 ---
 
@@ -36,7 +37,8 @@ var/
 │   ├── cpp/                         # CMake/Ninja build tree (`cmake -B var/build/cpp`)
 │   ├── zig/                         # Zig cache & out (`--cache-dir var/build/zig/cache --prefix var/build/zig/out`)
 │   ├── java/                        # Javac/Gradle/Maven classes & jars (`var/build/java`)
-│   └── py3/                         # Python bytecode/wheels (`PYTHONPYCACHEPREFIX=var/build/py3`)
+│   ├── py3/                         # Python bytecode/wheels (`PYTHONPYCACHEPREFIX=var/build/py3`)
+│   └── cs/                          # .NET / MSBuild bin & obj outputs (`var/build/cs`)
 ├── dist/                            # Distribution packages formatted for package managers (.deb, .rpm, .tar.zst, wheels)
 └── release/                         # Cryptographically signed release artifacts & checksum manifests
 ```
@@ -68,7 +70,8 @@ lib-agent/
 │   ├── src-cpp/                     # C++ coding rules & fast-pass specs
 │   ├── src-zig/                     # Zig coding rules & fast-pass specs
 │   ├── src-java/                    # Java coding rules & fast-pass specs
-│   └── src-py3/                     # Python 3 coding rules & fast-pass specs
+│   ├── src-py3/                     # Python 3 coding rules & fast-pass specs
+│   └── src-cs/                      # C# / .NET coding rules & fast-pass specs
 └── doc/
     ├── agent-jump-table.md          # Master concern & multi-language jump table
     ├── TODO.md                      # Architectural roadmap & language notes
