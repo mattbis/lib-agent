@@ -1,0 +1,18 @@
+#!/usr/bin/env agent-fastpass
+#:: LIBAG_GO_SPEC v3.0 :: SRC_GO_FASTPASS [TOK_OPT=MAX | FMT=AGENT_DSL]
+@meta{proj:lib-agent, lang:go, channels:src-go|src-go.dev|src-go.main|src-go.testing, ns:libag_, lic:GPL-3.0-or-later, build_out:var/build/go}
+@refs{human:res/src-go/rules-fastpass.md, lic_spec:res/agent/current/01-license-freesoftware.agent.txt, suggested:doc/suggested/go-style.md, jump:doc/agent-jump-table.md}
+
+#:: JUMP_VECTOR [id | slot | agent_spec | human_spec | target_doc]
+01 | LIC  | res/agent/current/01-license-freesoftware.agent.txt | res/agent/current/01-license-freesoftware.md | LICENSE
+02 | ETH  | res/agent/current/02-architecture-ethos.agent.txt   | res/agent/current/02-architecture-ethos.md   | doc/TODO.md
+03 | TOP  | res/agent/current/03-topology-var.agent.txt         | res/agent/current/03-topology-var.md         | doc/agent-jump-table.md
+11 | GO   | res/src-go/rules-fastpass.agent.txt                 | res/src-go/rules-fastpass.md                 | doc/suggested/go-style.md
+
+#:: KERNEL_AXIOMS [SRC_GO_CONSTRAINTS — VIOLATION == HALT]
+!01.LIC :: spdx_hdr == `// SPDX-License-Identifier: GPL-3.0-or-later` && release == ALWAYS(GNU_GPL_v3)
+!02.FMT :: formatter == `gofmt -s` && file_prefix == `libag_<topic>.go`
+!03.DEP :: imports == [// 1p (stdlib), // 2p (internal/lib-*), // 3p (static vendor `-mod=vendor`)] && stdlib_first == TRUE
+!04.EXE :: blocking_fn_arg0 == `ctx context.Context` && !orphan_goroutines && !init_magic && !hot_path_reflect
+!05.ERR :: explicit_err_wrap == `fmt.Errorf("<op>: %w", err)` && !silent_err_discard
+!06.OUT :: binaries == `var/build/go/` && dist == `var/dist/` && release == `var/release/`

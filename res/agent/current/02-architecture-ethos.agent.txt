@@ -1,0 +1,18 @@
+#!/usr/bin/env agent-fastpass
+#:: LIBAG_COMMON[02/ETH] :: FOREVER_CODE, ANTI_MUD & STATIC_DEP_DISCIPLINE
+@ctx{id:02-architecture-ethos, scope:ALL_LANGUAGES, pair:02-architecture-ethos.md, todo:doc/TODO.md}
+
+[AXIOM::FOREVER_CODE]
+longevity       :: code_for_decades |> prefer battle-tested deterministic primitives over framework churn
+anti_mud        :: STRICT_BOUNDED_SCOPE |> small composable modules; NEVER monolithic "big ball of mud" projects
+foss_mainline   :: minimal surface + self-checking invariants |> resilient against unguided LLM/vibe-coded forks
+
+[AXIOM::STATIC_SUPPLY_CHAIN]
+!no_pkg_roulette :: FORBID transitive remote dependency sprawl (npm/crates.io/PyPI/Maven malware & churn)
+!no_micro_deps   :: NEVER import trivial external packages for stdlib-level tasks; write in `2p` or vendor statically in `3p`
+static_3p        :: vendor audited GPLv3-compat source into `src-<lang>.dev/3p/<pkg>/` |> optimize & lock in-tree
+
+[AXIOM::UNIVERSAL_1P_2P_3P_TIERS]
+tier_1p :: language stdlib / runtime built-ins ONLY
+tier_2p :: repo-internal modules & sibling `lib-*` / `underwyrt` GPLv3 libraries
+tier_3p :: statically vendored `src-<lang>.dev/3p/<pkg>/` modules (ZERO unvendored prod deps)

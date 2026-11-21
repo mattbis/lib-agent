@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (C) Matthew & Contributors — Free Software (GNU GPLv3)
+
+# Unified variable outputs (canonical build, package dist, signed releases)
+/var/build/
+/var/dist/
+/var/release/
+
+# Local AI session state & ephemeral scratch
+/doc/.ai/
+
+# Fallback guards against accidental tool defaults
+node_modules/
+__pycache__/
+*.py[cod]
+.zig-cache/
+zig-out/
+target/
+.gradle/
+build/
+CMakeFiles/
+CMakeCache.txt

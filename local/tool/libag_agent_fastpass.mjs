@@ -471,8 +471,36 @@ export async function fastpass_audit_repo(ctx) {
                 var mline= md_lines[ml_idx]
                 if (mline.trim().startsWith('```')) {
                     in_fence= !in_fence
-                } else if (!in_fence && mline.includes('](file://')) {
-                    violations.push(rel + ':' + (ml_idx + 1) + ': !02.SYN forbidden `file://` Markdown link (use relative repo path)')
+                } else if (!in_fence) {
+                    var clean_line= mline.replace(/`[^`]*`/g, '')
+                    if (clean_line.includes('](file://')) {
+                        violations.push(rel + ':' + (ml_idx + 1) + ': !02.SYN forbidden `file://` Markdown link (use relative repo path)')
+                    }
+                    var link_re= /\[[^\]]+\]\(([^)#]+)(?:#[^)]*)?\)/g
+                    var match= link_re.exec(clean_line)
+                    while (match !== null) {
+                        var link_target= match[1].trim()
+                        if (
+                            link_target.length > 0 &&
+                            !link_target.startsWith('http://') &&
+                            !link_target.startsWith('https://') &&
+                            !link_target.startsWith('file://') &&
+                            !link_target.startsWith('mailto:')
+                        ) {
+                            var resolved_link= path.resolve(path.dirname(abs), link_target)
+                            var target_ok= false
+                            try {
+                                await fs.stat(resolved_link)
+                                target_ok= true
+                            } catch (_err) {
+                                target_ok= false
+                            }
+                            if (!target_ok) {
+                                violations.push(rel + ':' + (ml_idx + 1) + ': !02.SYN broken relative Markdown link `' + link_target + '`')
+                            }
+                        }
+                        match= link_re.exec(mline)
+                    }
                 }
                 ml_idx= ml_idx + 1
             }

@@ -1,0 +1,18 @@
+#!/usr/bin/env agent-fastpass
+#:: LIBAG_RS_SPEC v3.0 :: SRC_RS_FASTPASS [TOK_OPT=MAX | FMT=AGENT_DSL]
+@meta{proj:lib-agent, lang:rust, channels:src-rs|src-rs.dev|src-rs.main|src-rs.testing, ns:libag_, lic:GPL-3.0-or-later, build_out:var/build/rs}
+@refs{human:res/src-rs/rules-fastpass.md, lic_spec:res/agent/current/01-license-freesoftware.agent.txt, suggested:doc/suggested/rust-style.md, jump:doc/agent-jump-table.md}
+
+#:: JUMP_VECTOR [id | slot | agent_spec | human_spec | target_doc]
+01 | LIC  | res/agent/current/01-license-freesoftware.agent.txt | res/agent/current/01-license-freesoftware.md | LICENSE
+02 | ETH  | res/agent/current/02-architecture-ethos.agent.txt   | res/agent/current/02-architecture-ethos.md   | doc/TODO.md
+03 | TOP  | res/agent/current/03-topology-var.agent.txt         | res/agent/current/03-topology-var.md         | doc/agent-jump-table.md
+12 | RS   | res/src-rs/rules-fastpass.agent.txt                 | res/src-rs/rules-fastpass.md                 | doc/suggested/rust-style.md
+
+#:: KERNEL_AXIOMS [SRC_RS_CONSTRAINTS — VIOLATION == HALT]
+!01.LIC :: spdx_hdr == `// SPDX-License-Identifier: GPL-3.0-or-later` && cargo_lic == `GPL-3.0-or-later`
+!02.DEP :: use_order == [// 1p (core/std), // 2p (crate/lib-*), // 3p (static vendor `src-rs.dev/3p/`)] && cargo_flags == `--offline --frozen`
+!03.MEM :: prod_code => !`.unwrap()` && !`.expect()` && !clone_spam_to_appease_borrowck
+!04.RT  :: audio_clap_process_thread => ZERO_ALLOC && ZERO_MUTEX_LOCK && ZERO_SYSCALL
+!05.UNS :: `#![deny(unsafe_op_in_unsafe_fn)]` && every `unsafe` block REQUIRES `// SAFETY: <invariant_proof>`
+!06.OUT :: `CARGO_TARGET_DIR` == `var/build/rs` (!root `target/`) && dist == `var/dist/` && release == `var/release/`

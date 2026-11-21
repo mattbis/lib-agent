@@ -1,0 +1,18 @@
+#!/usr/bin/env agent-fastpass
+#:: LIBAG_ZIG_SPEC v3.0 :: SRC_ZIG_FASTPASS [TOK_OPT=MAX | FMT=AGENT_DSL]
+@meta{proj:lib-agent, lang:zig, channels:src-zig|src-zig.dev|src-zig.main|src-zig.testing, ns:libag_, lic:GPL-3.0-or-later, build_out:var/build/zig}
+@refs{human:res/src-zig/rules-fastpass.md, lic_spec:res/agent/current/01-license-freesoftware.agent.txt, suggested:doc/suggested/zig-style.md, jump:doc/agent-jump-table.md}
+
+#:: JUMP_VECTOR [id | slot | agent_spec | human_spec | target_doc]
+01 | LIC  | res/agent/current/01-license-freesoftware.agent.txt | res/agent/current/01-license-freesoftware.md | LICENSE
+02 | ETH  | res/agent/current/02-architecture-ethos.agent.txt   | res/agent/current/02-architecture-ethos.md   | doc/TODO.md
+03 | TOP  | res/agent/current/03-topology-var.agent.txt         | res/agent/current/03-topology-var.md         | doc/agent-jump-table.md
+14 | ZIG  | res/src-zig/rules-fastpass.agent.txt                | res/src-zig/rules-fastpass.md                | doc/suggested/zig-style.md
+
+#:: KERNEL_AXIOMS [SRC_ZIG_CONSTRAINTS — VIOLATION == HALT]
+!01.LIC :: spdx_hdr == `// SPDX-License-Identifier: GPL-3.0-or-later` && release == ALWAYS(GNU_GPL_v3)
+!02.FMT :: formatter == `zig fmt` (4_SP) && files == `libag_<topic>.zig` && fns == `<topic>_<action_snake>`
+!03.DEP :: imports == [// 1p (`@import("std")`), // 2p (`@import("libag_*.zig")`), // 3p (static `src-zig.dev/3p/`)]
+!04.MEM :: alloc == EXPLICIT_PARAM(`allocator: std.mem.Allocator` | caller_slice `[]u8`) && !global_hidden_alloc
+!05.ERR :: cleanup == immediate(`defer` | `errdefer`) && pub_api_err == EXPLICIT_ERROR_SET(!`anyerror`)
+!06.OUT :: cache_and_prefix == `var/build/zig/{cache,out}` (!root `.zig-cache/` or `zig-out/`)

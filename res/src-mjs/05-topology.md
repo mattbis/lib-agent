@@ -2,7 +2,7 @@
 
 #### status: canonical concern specification
 #### fast-pass (AI agent `.agent.txt`): [`05-topology.agent.txt`](05-topology.agent.txt)
-#### index: [`rules-fastpass.md`](rules-fastpass.md) | [`rules-fastpass.agent.txt`](rules-fastpass.agent.txt) | [`doc/agent-jump-table.md`](../../../doc/agent-jump-table.md)
+#### index: [`rules-fastpass.md`](rules-fastpass.md) | [`rules-fastpass.agent.txt`](rules-fastpass.agent.txt) | [`doc/agent-jump-table.md`](../../doc/agent-jump-table.md)
 
 ---
 
@@ -40,15 +40,19 @@ lib-agent/
 │   ├── sh/                          # CLI scripts (always with explicit .sh or .cmd extensions)
 │   └── tool/                        # Local lockdown, gate PIN, and release promotion tools
 ├── var/
-│   └── build/                       # Compiled binaries & bundles (strictly .gitignored)
+│   ├── build/                       # Compiled binaries & bundles (strictly .gitignored)
+│   ├── dist/                        # Package manager distribution forms (strictly .gitignored)
+│   └── release/                     # Signed release artifacts (strictly .gitignored)
 ├── res/
-│   ├── agent/current/               # Fast-pass AI (.agent.txt) & human (.md) concern specs
-│   └── auto/antigravity/            # Reference search & style specification (search.md)
+│   ├── agent/current/               # Universal language-agnostic rules & empire master index
+│   └── src-<lang>/                  # Language-specific fast-pass specs (src-mjs, src-go, src-rs, src-cpp, src-zig, src-java, src-py3)
 └── doc/
     ├── .ai/                         # AI memory, DESIGN_MOMENTUM.md, roadmaps (.gitignored)
     ├── .graveyard/                  # Archived ideas & deferred designs for historical context
     ├── maintainer/                  # Maintainer guides, guard & promotion docs
+    ├── suggested/                   # Google-inspired & anti-LLM-mess rules per language
     ├── template/                    # Canonical module template (libag_module_template.mjs)
+    ├── TODO.md                      # Architectural roadmap & language notes
     ├── agent-jump-table.md          # Canonical AI & human concern jump table
     ├── CODE_STYLE.md                # Formatting, naming, and defensive coding rules
     ├── LIB_STRUCTURE.md             # Channels, logging tiers, and naming rules

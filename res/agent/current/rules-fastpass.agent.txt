@@ -1,0 +1,22 @@
+#!/usr/bin/env agent-fastpass
+#:: LIBAG_EMPIRE_SPEC v3.0 :: UNIVERSAL_AGNOSTIC_INDEX [TOK_OPT=MAX | FMT=AGENT_DSL]
+@meta{proj:lib-agent, ns:libag_, lic:GPL-3.0-or-later, ethos:FREE_SOFTWARE_FOREVER_CODE, root_lic:LICENSE}
+@refs{human:res/agent/current/rules-fastpass.md, jump:doc/agent-jump-table.md, todo:doc/TODO.md, suggested:doc/suggested/README.md}
+
+#:: JUMP_VECTOR [id | slot | agent_spec | human_spec | target_doc]
+01 | LIC  | res/agent/current/01-license-freesoftware.agent.txt | res/agent/current/01-license-freesoftware.md | LICENSE
+02 | ETH  | res/agent/current/02-architecture-ethos.agent.txt   | res/agent/current/02-architecture-ethos.md   | doc/TODO.md
+03 | TOP  | res/agent/current/03-topology-var.agent.txt         | res/agent/current/03-topology-var.md         | doc/agent-jump-table.md
+10 | MJS  | res/src-mjs/rules-fastpass.agent.txt                | res/src-mjs/rules-fastpass.md                | doc/suggested/llm-guardrails.md
+11 | GO   | res/src-go/rules-fastpass.agent.txt                 | res/src-go/rules-fastpass.md                 | doc/suggested/go-style.md
+12 | RS   | res/src-rs/rules-fastpass.agent.txt                 | res/src-rs/rules-fastpass.md                 | doc/suggested/rust-style.md
+13 | CPP  | res/src-cpp/rules-fastpass.agent.txt                | res/src-cpp/rules-fastpass.md                | doc/suggested/cpp-style.md
+14 | ZIG  | res/src-zig/rules-fastpass.agent.txt                | res/src-zig/rules-fastpass.md                | doc/suggested/zig-style.md
+15 | JAVA | res/src-java/rules-fastpass.agent.txt               | res/src-java/rules-fastpass.md               | doc/suggested/java-style.md
+16 | PY3  | res/src-py3/rules-fastpass.agent.txt                | res/src-py3/rules-fastpass.md                | doc/suggested/py3-style.md
+
+#:: KERNEL_AXIOMS [UNIVERSAL_HARD_CONSTRAINTS — VIOLATION == HALT]
+!01.LIC :: code_release == ALWAYS(GPL-3.0-or-later) && spdx_hdr == REQUIRED_ALL_LANGS && 3p_lic == GPLv3_COMPAT_FREE_SW && !proprietary
+!02.ETH :: forever_code == TRUE && deps == STATIC_3P_ONLY(!remote_pkg_roulette) && import_tiers == [1p, 2p, 3p] && !ball_of_mud
+!03.TOP :: channels == `src-{mjs,go,rs,cpp,zig,java,py3}.{dev,main,testing}` && artifacts == `var/{build,dist,release}` (!root_splatter)
+!04.LLM :: obey(`doc/suggested/llm-guardrails.md`) |> zero unrequested deps, zero architecture drift, preserve `.dev` stubs

@@ -1,8 +1,9 @@
 # Concern 01: Free Software & Licensing (`GPLv3`)
 
-#### status: canonical concern specification
+#### status: canonical concern specification (`src-mjs`)
 #### fast-pass (AI agent `.agent.txt`): [`01-license-freesoftware.agent.txt`](01-license-freesoftware.agent.txt)
-#### index: [`rules-fastpass.md`](rules-fastpass.md) | [`rules-fastpass.agent.txt`](rules-fastpass.agent.txt) | [`doc/agent-jump-table.md`](../../../doc/agent-jump-table.md)
+#### universal license spec: [`../agent/current/01-license-freesoftware.md`](../agent/current/01-license-freesoftware.md) | [`../agent/current/01-license-freesoftware.agent.txt`](../agent/current/01-license-freesoftware.agent.txt)
+#### index: [`rules-fastpass.md`](rules-fastpass.md) | [`rules-fastpass.agent.txt`](rules-fastpass.agent.txt) | [`doc/agent-jump-table.md`](../../doc/agent-jump-table.md)
 
 ---
 
@@ -12,7 +13,7 @@
     - We are Free Software ("free as in freedom"). All code, libraries, tools, scripts, and templates authored across `lib-agent` and sibling `lib-*` repositories are **always released under the GNU General Public License Version 3 (`GPL-3.0`)**.
     - Every user and downstream recipient is guaranteed the four essential software freedoms: to run, study, redistribute, and distribute modified versions of the program under the same copyleft terms.
 - **Root `LICENSE` File:**
-    - Every repository must maintain a root [`LICENSE`](../../../LICENSE) file containing the full GNU GPLv3 text.
+    - Every repository must maintain a root [`LICENSE`](../../LICENSE) file containing the full GNU GPLv3 text.
     - Never remove, weaken, or replace the copyleft license in any channel (`.dev`, `.main`, `.testing`) or build artifact.
 
 ---

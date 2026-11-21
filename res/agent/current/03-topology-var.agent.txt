@@ -1,0 +1,23 @@
+#!/usr/bin/env agent-fastpass
+#:: LIBAG_COMMON[03/TOP] :: MULTI_LANGUAGE_CHANNELS & VAR_ARTIFACT_TOPOLOGY
+@ctx{id:03-topology-var, scope:ALL_LANGUAGES, pair:03-topology-var.md, todo:doc/TODO.md}
+
+[MATRIX::LANGUAGE_CHANNELS]
+# lang  | channels                                      | primary_domain
+mjs     | src-mjs  | src-mjs.dev  | src-mjs.main  | src-mjs.testing  | agent runtime, zero-GC SAB workers, tooling
+go      | src-go   | src-go.dev   | src-go.main   | src-go.testing   | high-efficiency CLI, networking, music governor
+rs      | src-rs   | src-rs.dev   | src-rs.main   | src-rs.testing   | memory-controlled apps/runtimes, CLAP audio plugins
+cpp     | src-cpp  | src-cpp.dev  | src-cpp.main  | src-cpp.testing  | cross-board systems & engines (strict orthodox subset)
+zig     | src-zig  | src-zig.dev  | src-zig.main  | src-zig.testing  | small C-power high-performance components
+java    | src-java | src-java.dev | src-java.main | src-java.testing | financial, messaging, AI, enterprise interop
+py3     | src-py3  | src-py3.dev  | src-py3.main  | src-py3.testing  | strictly bounded glue scripts (NEVER giant projects)
+
+[AXIOM::VAR_OUTPUT_DISCIPLINE]
+!no_root_splatter :: FORBID scattered `target/`, `build/`, `dist/`, `__pycache__/`, `.gradle/`, `zig-cache/` in repo root or `src-*`
+var_build         :: `var/build/<lang-or-target>/` |> ALL compiler outputs, object caches, and intermediate bundles (`.gitignore`d)
+var_dist          :: `var/dist/`                   |> package-manager distribution artifacts (`.gitignore`d)
+var_release       :: `var/release/`                |> cryptographically signed release artifacts & manifests (`.gitignore`d)
+
+[INVARIANTS::CHANNEL_HYGIENE]
+!preserve_stubs   :: empty files in `src-<lang>.dev/` == intentional architectural placeholders |> NEVER delete
+!script_ext       :: `local/sh/*` MUST use explicit `.sh` or `.cmd` extension

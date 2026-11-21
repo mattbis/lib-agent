@@ -17,10 +17,12 @@ src-mjs.{dev,main,testing}/     |> MJS channels: active dev | hardened prod | be
 src-zig.{dev,main,testing}/     |> native Zig channels (high-speed streams/IPC)
 local/sh/                       |> CLI scripts — MUST use explicit `.sh` or `.cmd` extension
 local/tool/                     |> lockdown, gate PIN, release promotion tools
-var/build/                      |> compiled binaries & bundles (`.gitignore`d)
-res/agent/current/              |> modular concern specs (`.md` + `.agent.txt`)
-res/auto/antigravity/search.md  |> origin reference spec
-doc/agent-jump-table.md         |> canonical agent concern jump table
+var/{build,dist,release}/       |> build targets, package-manager dists, signed releases (`.gitignore`d)
+res/agent/current/              |> universal language-agnostic rules & empire master index
+res/src-<lang>/                 |> modular per-language concern specs (`.md` + `.agent.txt`)
+doc/agent-jump-table.md         |> canonical agent concern & multi-language jump table
+doc/TODO.md                     |> architectural roadmap & multi-language philosophy
+doc/suggested/                  |> Google-inspired & anti-LLM-mess rules per language
 doc/{.ai,.graveyard,maintainer,template}/ |> AI state, history, maintainer guides, module templates
 
 [INVARIANTS::FS]

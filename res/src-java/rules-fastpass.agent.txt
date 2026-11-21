@@ -1,0 +1,18 @@
+#!/usr/bin/env agent-fastpass
+#:: LIBAG_JAVA_SPEC v3.0 :: SRC_JAVA_FASTPASS [TOK_OPT=MAX | FMT=AGENT_DSL]
+@meta{proj:lib-agent, lang:java, jdk:21_LTS+, channels:src-java|src-java.dev|src-java.main|src-java.testing, ns:libag_, lic:GPL-3.0-or-later, build_out:var/build/java}
+@refs{human:res/src-java/rules-fastpass.md, lic_spec:res/agent/current/01-license-freesoftware.agent.txt, suggested:doc/suggested/java-style.md, jump:doc/agent-jump-table.md}
+
+#:: JUMP_VECTOR [id | slot | agent_spec | human_spec | target_doc]
+01 | LIC  | res/agent/current/01-license-freesoftware.agent.txt | res/agent/current/01-license-freesoftware.md | LICENSE
+02 | ETH  | res/agent/current/02-architecture-ethos.agent.txt   | res/agent/current/02-architecture-ethos.md   | doc/TODO.md
+03 | TOP  | res/agent/current/03-topology-var.agent.txt         | res/agent/current/03-topology-var.md         | doc/agent-jump-table.md
+15 | JAVA | res/src-java/rules-fastpass.agent.txt               | res/src-java/rules-fastpass.md               | doc/suggested/java-style.md
+
+#:: KERNEL_AXIOMS [SRC_JAVA_CONSTRAINTS — VIOLATION == HALT]
+!01.LIC :: spdx_hdr == `// SPDX-License-Identifier: GPL-3.0-or-later` && release == ALWAYS(GNU_GPL_v3)
+!02.FIN :: monetary_math == `BigDecimal(explicit_MathContext)` | `long_minor_units` && NEVER(`float` | `double`)
+!03.MOD :: dto_messages == `record` && domain_states == `sealed interface` && !spring_reflection_bloat && !factory_soup
+!04.DEP :: imports == [// 1p (`java.*`), // 2p (`org.libagent.*`), // 3p (static `src-java.dev/3p/`)] && !wildcard_imports
+!05.SYN :: indent == 4_SP && classes == `Libag<PascalCase>.java`
+!06.OUT :: classes_and_jars == `var/build/java/` (!root `target/` or `build/`)

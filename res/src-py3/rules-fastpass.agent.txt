@@ -1,0 +1,18 @@
+#!/usr/bin/env agent-fastpass
+#:: LIBAG_PY3_SPEC v3.0 :: SRC_PY3_FASTPASS [TOK_OPT=MAX | FMT=AGENT_DSL]
+@meta{proj:lib-agent, lang:python3, channels:src-py3|src-py3.dev|src-py3.main|src-py3.testing, ns:libag_, lic:GPL-3.0-or-later, build_out:var/build/py3}
+@refs{human:res/src-py3/rules-fastpass.md, lic_spec:res/agent/current/01-license-freesoftware.agent.txt, suggested:doc/suggested/py3-style.md, jump:doc/agent-jump-table.md}
+
+#:: JUMP_VECTOR [id | slot | agent_spec | human_spec | target_doc]
+01 | LIC  | res/agent/current/01-license-freesoftware.agent.txt | res/agent/current/01-license-freesoftware.md | LICENSE
+02 | ETH  | res/agent/current/02-architecture-ethos.agent.txt   | res/agent/current/02-architecture-ethos.md   | doc/TODO.md
+03 | TOP  | res/agent/current/03-topology-var.agent.txt         | res/agent/current/03-topology-var.md         | doc/agent-jump-table.md
+16 | PY3  | res/src-py3/rules-fastpass.agent.txt                | res/src-py3/rules-fastpass.md                | doc/suggested/py3-style.md
+
+#:: KERNEL_AXIOMS [SRC_PY3_CONSTRAINTS — VIOLATION == HALT]
+!01.LIC :: spdx_hdr == `# SPDX-License-Identifier: GPL-3.0-or-later` && release == ALWAYS(GNU_GPL_v3)
+!02.SCP :: role == BOUNDED_GLUE_ONLY && !giant_python_monolith && !deep_class_hierarchies
+!03.DEP :: imports == [# 1p (stdlib), # 2p (libag_*.py), # 3p (static `src-py3.dev/3p/`)] && stdlib_only_default == TRUE
+!04.TYP :: type_hints == MANDATORY_ON_ALL_FNS && records == `@dataclass(frozen=True, slots=True)`
+!05.SYN :: indent == 4_SP && files == `libag_<topic>.py` && fns == `<topic>_<action_snake>`
+!06.OUT :: `PYTHONPYCACHEPREFIX` == `var/build/py3/pycache` (!scattered `__pycache__/`)

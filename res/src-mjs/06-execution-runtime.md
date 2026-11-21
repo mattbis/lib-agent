@@ -2,7 +2,7 @@
 
 #### status: canonical concern specification
 #### fast-pass (AI agent `.agent.txt`): [`06-execution-runtime.agent.txt`](06-execution-runtime.agent.txt)
-#### index: [`rules-fastpass.md`](rules-fastpass.md) | [`rules-fastpass.agent.txt`](rules-fastpass.agent.txt) | [`doc/agent-jump-table.md`](../../../doc/agent-jump-table.md)
+#### index: [`rules-fastpass.md`](rules-fastpass.md) | [`rules-fastpass.agent.txt`](rules-fastpass.agent.txt) | [`doc/agent-jump-table.md`](../../doc/agent-jump-table.md)
 
 ---
 

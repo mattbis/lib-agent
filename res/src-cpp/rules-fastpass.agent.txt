@@ -1,0 +1,18 @@
+#!/usr/bin/env agent-fastpass
+#:: LIBAG_CPP_SPEC v3.0 :: SRC_CPP_FASTPASS [TOK_OPT=MAX | FMT=AGENT_DSL]
+@meta{proj:lib-agent, lang:cpp, std:c++20, channels:src-cpp|src-cpp.dev|src-cpp.main|src-cpp.testing, ns:libag_, lic:GPL-3.0-or-later, build_out:var/build/cpp}
+@refs{human:res/src-cpp/rules-fastpass.md, lic_spec:res/agent/current/01-license-freesoftware.agent.txt, suggested:doc/suggested/cpp-style.md, jump:doc/agent-jump-table.md}
+
+#:: JUMP_VECTOR [id | slot | agent_spec | human_spec | target_doc]
+01 | LIC  | res/agent/current/01-license-freesoftware.agent.txt | res/agent/current/01-license-freesoftware.md | LICENSE
+02 | ETH  | res/agent/current/02-architecture-ethos.agent.txt   | res/agent/current/02-architecture-ethos.md   | doc/TODO.md
+03 | TOP  | res/agent/current/03-topology-var.agent.txt         | res/agent/current/03-topology-var.md         | doc/agent-jump-table.md
+13 | CPP  | res/src-cpp/rules-fastpass.agent.txt                | res/src-cpp/rules-fastpass.md                | doc/suggested/cpp-style.md
+
+#:: KERNEL_AXIOMS [SRC_CPP_CONSTRAINTS — VIOLATION == HALT]
+!01.LIC :: spdx_hdr == `// SPDX-License-Identifier: GPL-3.0-or-later` && release == ALWAYS(GNU_GPL_v3)
+!02.SUB :: dialect == ORTHODOX_CPP20 && flags == `-fno-exceptions -fno-rtti -Wall -Wextra -Werror`
+!03.MEM :: ownership == arena_or_fixed_buffer_or_unique && !shared_ptr_graphs && !raw_owning_new_delete && !macro_magic
+!04.DEP :: includes == [// 1p (<cstdint>/stdlib), // 2p ("libag_*.hpp"), // 3p (static `src-cpp.dev/3p/`)]
+!05.SYN :: indent == 4_SP && files == `libag_<topic>.{hpp,cpp}` && fns == `<topic>_<action_snake>`
+!06.OUT :: cmake_build == `var/build/cpp/` && dist == `var/dist/` && release == `var/release/`
