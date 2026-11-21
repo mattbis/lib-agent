@@ -5,22 +5,22 @@ Here are some rough guidelines on how these fit into my projects, both completed
 
 - Java
   - we will use for financial and messages; AI and other stuff, since its used for endless things old and new
-  - `src.java`
+  - `src-java` `src-java.dev` `src-java.main`
 - Python3
   - we use as original glue - not giant projects that end up a mess - I really dislike huge python projects they are hard to read and a mess. I also dislike the packaging system and the way pip works :D, UV has made that better, but its so clunky so many files.. I will probably change my mind evventualllly.
-  - `src.py3`
+  - `src-py3`  `src-py3.dev` `src-py3.main`
 - Go
   - we will use mostly for applications that are highly efficient cli, networking and stuff like music governor
-  - `src.go`
+  - `src-go` `src-go.dev` `src-go.main`
 - Rust
   - we will use for highly memory controlled applications and runtimes. I am undecided about plugins but its easier doing clap with it than SDK Vst3. its suffering from the problem of npm / node so many packages, its almost impossible verify a supply chain that big, thats something i really don't like...
-  - `src.rs`
+  - `src-rs`  `src-rs.dev` `src-rs.main`
 - Cplusplus
   - we will use across the board... but again we dislike huge projects since it can be a nightmare, and the language is almost like insanity since there are so many ways to do anything
-  - `src.cpp`
+  - `src-cpp`  `src-cpp.dev` `src-cpp.main`
 - zig
   - we will use for small components, that need the power of C but super performance. and I really like the ethos behind it
-  - `src.zig`
+  - `src-zig`  `src-zig.dev` `src-zig.main`
 
 For each language, we need to have solid rules for style... I like all code to be consistent and not a BULL OF MUD. Therefore the first task is to generalise the repo structure and to separate things into agnostic and common across programming.
 
