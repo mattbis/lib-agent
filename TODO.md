@@ -4,7 +4,7 @@
 Here are some rough guidelines on how these fit into my projects, both completed, and not completed, many are architected but need a lot of work. Note these guidelines are subject to change depending on how much I come to love each __way__ of doing things.... 
 
 - Java
-  - we will use for financial and messages; AI and reverse engineering stuff.
+  - we will use for financial and messages; AI and other stuff, since its used for endless things old and new
 - Python3
   - we use as original glue - not giant projects that end up a mess - I really dislike huge python projects they are hard to read and a mess.
 - Go
