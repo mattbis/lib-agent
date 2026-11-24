@@ -15,9 +15,10 @@
 15 | JAVA | res/src-java/rules-fastpass.agent.txt               | res/src-java/rules-fastpass.md               | doc/suggested/java-style.md
 16 | PY3  | res/src-py3/rules-fastpass.agent.txt                | res/src-py3/rules-fastpass.md                | doc/suggested/py3-style.md
 17 | CS   | res/src-cs/rules-fastpass.agent.txt                 | res/src-cs/rules-fastpass.md                 | doc/suggested/cs-style.md
+18 | KT   | res/src-kt/rules-fastpass.agent.txt                 | res/src-kt/rules-fastpass.md                 | doc/suggested/kt-style.md
 
 #:: KERNEL_AXIOMS [UNIVERSAL_HARD_CONSTRAINTS — VIOLATION == HALT]
 !01.LIC :: code_release == ALWAYS(GPL-3.0-or-later) && spdx_hdr == REQUIRED_ALL_LANGS && 3p_lic == GPLv3_COMPAT_FREE_SW && !proprietary
 !02.ETH :: forever_code == TRUE && deps == STATIC_3P_ONLY(!remote_pkg_roulette) && import_tiers == [1p, 2p, 3p] && !ball_of_mud
-!03.TOP :: channels == `src-{mjs,go,rs,cpp,zig,java,py3,cs}.{dev,main,testing}` && artifacts == `var/{build,dist,release}` (!root_splatter)
+!03.TOP :: channels == `src-{mjs,go,rs,cpp,zig,java,py3,cs,kt}.{dev,main,testing}` && artifacts == `var/{build,dist,release}` (!root_splatter)
 !04.LLM :: obey(`doc/suggested/llm-guardrails.md`) |> zero unrequested deps, zero architecture drift, preserve `.dev` stubs

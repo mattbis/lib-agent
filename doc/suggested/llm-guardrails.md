@@ -29,7 +29,7 @@ When moving from single-file scripts to multi-language systems architectures (`l
 ### Rule 2: Mirror the `libag_` Dual Surface & Topic-Prefixed Naming Across Languages
 - Keep functions flat, stateless where possible, and prefixed with their domain coordinate (`<topic>_<action_snake_case>`):
     - **MJS / C++ / Zig / Python 3 / Rust:** `volume_imprint()`, `ipc_ring_push()`, `governor_budget_check()`
-    - **Go / Java:** Keep package/class methods directly mapped to the same topic coordinates (`GovernorBudgetCheck`, `IpcRingPush`).
+    - **Go / Java / C# / Kotlin:** Keep package/class methods directly mapped to the same topic coordinates (`GovernorBudgetCheck` / `governorBudgetCheck`, `IpcRingPush` / `ipcRingPush`).
 - Pass explicit context or arena/allocator handles as the first argument (`ctx`, `allocator`) rather than mutating hidden globals.
 
 ### Rule 3: Respect the Three-Header Contract on Every File
@@ -52,3 +52,4 @@ Never run a bare build tool that writes to the working directory. Always pass th
 - **Java:** `javac -d var/build/java/classes ...`
 - **Python 3:** `PYTHONPYCACHEPREFIX=var/build/py3/pycache python3 ...`
 - **C# / .NET:** `dotnet build --artifacts-path var/build/cs` (or via root `Directory.Build.props`)
+- **Kotlin:** `kotlinc ... -d var/build/kt/libag.jar` (or Gradle `layout.buildDirectory.set(rootDir.resolve("var/build/kt"))`)

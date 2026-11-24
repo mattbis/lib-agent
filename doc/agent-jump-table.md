@@ -31,6 +31,7 @@
 | `15` | `JAVA` | **Java (`src-java`, `.dev`, `.main`, `.testing`)** | [`res/src-java/rules-fastpass.agent.txt`](../res/src-java/rules-fastpass.agent.txt) | [`res/src-java/rules-fastpass.md`](../res/src-java/rules-fastpass.md) | [`doc/suggested/java-style.md`](suggested/java-style.md) | [`01-license-freesoftware`](../res/agent/current/01-license-freesoftware.md) |
 | `16` | `PY3` | **Python 3 (`src-py3`, `.dev`, `.main`, `.testing`)** | [`res/src-py3/rules-fastpass.agent.txt`](../res/src-py3/rules-fastpass.agent.txt) | [`res/src-py3/rules-fastpass.md`](../res/src-py3/rules-fastpass.md) | [`doc/suggested/py3-style.md`](suggested/py3-style.md) | [`01-license-freesoftware`](../res/agent/current/01-license-freesoftware.md) |
 | `17` | `CS` | **C# / .NET (`src-cs`, `.dev`, `.main`, `.testing`)** | [`res/src-cs/rules-fastpass.agent.txt`](../res/src-cs/rules-fastpass.agent.txt) | [`res/src-cs/rules-fastpass.md`](../res/src-cs/rules-fastpass.md) | [`doc/suggested/cs-style.md`](suggested/cs-style.md) | [`01-license-freesoftware`](../res/agent/current/01-license-freesoftware.md) |
+| `18` | `KT` | **Kotlin (`src-kt`, `.dev`, `.main`, `.testing`)** | [`res/src-kt/rules-fastpass.agent.txt`](../res/src-kt/rules-fastpass.agent.txt) | [`res/src-kt/rules-fastpass.md`](../res/src-kt/rules-fastpass.md) | [`doc/suggested/kt-style.md`](suggested/kt-style.md) | [`01-license-freesoftware`](../res/agent/current/01-license-freesoftware.md) |
 
 ---
 

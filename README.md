@@ -6,7 +6,7 @@
 #### universal human index: [`res/agent/current/rules-fastpass.md`](res/agent/current/rules-fastpass.md)
 #### architectural roadmap: [`doc/TODO.md`](doc/TODO.md)
 
-`lib-agent` (namespace prefix `libag_`) is the canonical multi-language architecture, coding style, and fast-pass rule repository for Free Software (`GPLv3`) systems and libraries across **MJS (`src-mjs`)**, **Go (`src-go`)**, **Rust (`src-rs`)**, **C++ (`src-cpp`)**, **Zig (`src-zig`)**, **Java (`src-java`)**, **Python 3 (`src-py3`)**, and **C# / .NET (`src-cs`)**.
+`lib-agent` (namespace prefix `libag_`) is the canonical multi-language architecture, coding style, and fast-pass rule repository for Free Software (`GPLv3`) systems and libraries across **MJS (`src-mjs`)**, **Go (`src-go`)**, **Rust (`src-rs`)**, **C++ (`src-cpp`)**, **Zig (`src-zig`)**, **Java (`src-java`)**, **Python 3 (`src-py3`)**, **C# / .NET (`src-cs`)**, and **Kotlin (`src-kt`)**.
 
 ---
 
@@ -25,9 +25,10 @@
     - [`res/src-java/rules-fastpass.md`](res/src-java/rules-fastpass.md) ([`.agent.txt`](res/src-java/rules-fastpass.agent.txt))
     - [`res/src-py3/rules-fastpass.md`](res/src-py3/rules-fastpass.md) ([`.agent.txt`](res/src-py3/rules-fastpass.agent.txt))
     - [`res/src-cs/rules-fastpass.md`](res/src-cs/rules-fastpass.md) ([`.agent.txt`](res/src-cs/rules-fastpass.agent.txt))
+    - [`res/src-kt/rules-fastpass.md`](res/src-kt/rules-fastpass.md) ([`.agent.txt`](res/src-kt/rules-fastpass.agent.txt))
 - **Google-Inspired & Anti-LLM-Mess Guides (`doc/suggested/`):**
     - [`doc/suggested/README.md`](doc/suggested/README.md) — Overview & index
     - [`doc/suggested/llm-guardrails.md`](doc/suggested/llm-guardrails.md) — Guardrails for GPT, DeepSeek, and local LLMs before `underwyrt`
-    - [`doc/suggested/cpp-style.md`](doc/suggested/cpp-style.md) | [`rust-style.md`](doc/suggested/rust-style.md) | [`go-style.md`](doc/suggested/go-style.md) | [`zig-style.md`](doc/suggested/zig-style.md) | [`java-style.md`](doc/suggested/java-style.md) | [`py3-style.md`](doc/suggested/py3-style.md) | [`cs-style.md`](doc/suggested/cs-style.md)
+    - [`doc/suggested/cpp-style.md`](doc/suggested/cpp-style.md) | [`rust-style.md`](doc/suggested/rust-style.md) | [`go-style.md`](doc/suggested/go-style.md) | [`zig-style.md`](doc/suggested/zig-style.md) | [`java-style.md`](doc/suggested/java-style.md) | [`py3-style.md`](doc/suggested/py3-style.md) | [`cs-style.md`](doc/suggested/cs-style.md) | [`kt-style.md`](doc/suggested/kt-style.md)
 - **Fast-Pass CLI Tool (`agent-fastpass`):**
     - Run `.\local\sh\agent-fastpass.cmd` (or `./local/sh/agent-fastpass.sh`) with `+validate`, `+audit`, or `+bundle`.

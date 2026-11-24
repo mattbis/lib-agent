@@ -17,6 +17,7 @@ __pycache__/
 zig-out/
 target/
 .gradle/
+.kotlin/
 build/
 bin/
 obj/

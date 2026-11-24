@@ -9,7 +9,7 @@ root_file   :: `/LICENSE` == PRESENT && IMMUTABLE across all `src-<lang>.{dev,ma
 manifests   :: `package.json` | `Cargo.toml` | `pyproject.toml` => `license = "GPL-3.0-or-later"`
 
 [HEADER::SOURCE_STAMP]
-c_family    :: {.mjs,.go,.rs,.cpp,.hpp,.zig,.java,.cs} => `// SPDX-License-Identifier: GPL-3.0-or-later`
+c_family    :: {.mjs,.go,.rs,.cpp,.hpp,.zig,.java,.cs,.kt,.kts} => `// SPDX-License-Identifier: GPL-3.0-or-later`
 hash_family :: {.py,.sh,CMakeLists.txt,.toml}      => `# SPDX-License-Identifier: GPL-3.0-or-later`
 batch_cmd   :: {.cmd}                              => `REM SPDX-License-Identifier: GPL-3.0-or-later`
 

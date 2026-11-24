@@ -25,6 +25,9 @@ Here are some rough guidelines on how these fit into my projects, both completed
 - C# / .NET
     - modern .NET (8/9+ & NativeAOT) with `Span<T>`, value types, financial/messaging/tooling and cross-platform apps
     - `src-cs`  `src-cs.dev` `src-cs.main`
+- Kotlin
+    - modern Kotlin 2.x (K2 JVM, Native & Multiplatform) with `@JvmInline value class`, `sealed interface`, structured coroutines, Android/desktop/UI & clean `src-java` interop (zero DSL bloat)
+    - `src-kt`  `src-kt.dev` `src-kt.main`
 
 For each language, we need to have solid rules for style... I like all code to be consistent and not a BULL OF MUD. Therefore the first task is to generalise the repo structure and to separate things into agnostic and common across programming.
 

@@ -21,12 +21,13 @@ Never dump source files into a generic `src/` folder. Every language is isolated
 | **Java** | `src-java` | `src-java.dev/` | `src-java.main/` | `src-java.testing/` | Financial systems, messaging buses, AI & enterprise integrations. |
 | **Python 3** | `src-py3` | `src-py3.dev/` | `src-py3.main/` | `src-py3.testing/` | Strictly bounded glue scripts & automation (never giant monoliths). |
 | **C# / .NET** | `src-cs` | `src-cs.dev/` | `src-cs.main/` | `src-cs.testing/` | Modern .NET 8/9+ & NativeAOT, `Span<T>`, tooling, financial & services. |
+| **Kotlin** | `src-kt` | `src-kt.dev/` | `src-kt.main/` | `src-kt.testing/` | Kotlin 2.x K2 (JVM, Native & KMP), `@JvmInline value class`, coroutines & `src-java` interop. |
 
 ---
 
 ## 2. Unified Variable Output Topology (`var/`)
 
-Compilers, bundlers, and package managers must **never** splatter build artifacts (`target/`, `build/`, `dist/`, `__pycache__/`, `.gradle/`, `zig-cache/`) across the repository root or source directories. All variable/generated outputs live strictly under `var/` (which is globally `.gitignore`d):
+Compilers, bundlers, and package managers must **never** splatter build artifacts (`target/`, `build/`, `dist/`, `__pycache__/`, `.gradle/`, `.kotlin/`, `zig-cache/`) across the repository root or source directories. All variable/generated outputs live strictly under `var/` (which is globally `.gitignore`d):
 
 ```text
 var/
@@ -38,7 +39,8 @@ var/
 │   ├── zig/                         # Zig cache & out (`--cache-dir var/build/zig/cache --prefix var/build/zig/out`)
 │   ├── java/                        # Javac/Gradle/Maven classes & jars (`var/build/java`)
 │   ├── py3/                         # Python bytecode/wheels (`PYTHONPYCACHEPREFIX=var/build/py3`)
-│   └── cs/                          # .NET / MSBuild bin & obj outputs (`var/build/cs`)
+│   ├── cs/                          # .NET / MSBuild bin & obj outputs (`var/build/cs`)
+│   └── kt/                          # Kotlin / K2 classes, jars & KLIBs (`var/build/kt`)
 ├── dist/                            # Distribution packages formatted for package managers (.deb, .rpm, .tar.zst, wheels)
 └── release/                         # Cryptographically signed release artifacts & checksum manifests
 ```
@@ -71,7 +73,8 @@ lib-agent/
 │   ├── src-zig/                     # Zig coding rules & fast-pass specs
 │   ├── src-java/                    # Java coding rules & fast-pass specs
 │   ├── src-py3/                     # Python 3 coding rules & fast-pass specs
-│   └── src-cs/                      # C# / .NET coding rules & fast-pass specs
+│   ├── src-cs/                      # C# / .NET coding rules & fast-pass specs
+│   └── src-kt/                      # Kotlin coding rules & fast-pass specs
 └── doc/
     ├── agent-jump-table.md          # Master concern & multi-language jump table
     ├── TODO.md                      # Architectural roadmap & language notes

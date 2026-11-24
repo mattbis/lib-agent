@@ -12,9 +12,10 @@ zig     | src-zig  | src-zig.dev  | src-zig.main  | src-zig.testing  | small C-p
 java    | src-java | src-java.dev | src-java.main | src-java.testing | financial, messaging, AI, enterprise interop
 py3     | src-py3  | src-py3.dev  | src-py3.main  | src-py3.testing  | strictly bounded glue scripts (NEVER giant projects)
 cs      | src-cs   | src-cs.dev   | src-cs.main   | src-cs.testing   | modern .NET 8/9+ & NativeAOT, Span<T>, tooling & services
+kt      | src-kt   | src-kt.dev   | src-kt.main   | src-kt.testing   | Kotlin 2.x K2 JVM/Native/KMP, @JvmInline value class, coroutines
 
 [AXIOM::VAR_OUTPUT_DISCIPLINE]
-!no_root_splatter :: FORBID scattered `target/`, `build/`, `dist/`, `__pycache__/`, `.gradle/`, `zig-cache/` in repo root or `src-*`
+!no_root_splatter :: FORBID scattered `target/`, `build/`, `dist/`, `__pycache__/`, `.gradle/`, `.kotlin/`, `zig-cache/` in repo root or `src-*`
 var_build         :: `var/build/<lang-or-target>/` |> ALL compiler outputs, object caches, and intermediate bundles (`.gitignore`d)
 var_dist          :: `var/dist/`                   |> package-manager distribution artifacts (`.gitignore`d)
 var_release       :: `var/release/`                |> cryptographically signed release artifacts & manifests (`.gitignore`d)

@@ -31,7 +31,7 @@
 
 ## 3. Universal `1p` / `2p` / `3p` Import Discipline
 
-Across every language (`MJS`, `Go`, `Rust`, `C++`, `Zig`, `Java`, `Python 3`), imports/includes at the top of every source file are strictly grouped into three explicit tiers:
-1. **`1p` (First-Party / Standard Library):** Core language & OS runtime standard library (`node:*`, Go stdlib, Rust `core::`/`std::`, C++ `<cstdint>`/STL, Zig `@import("std")`, Java `java.*`, Python stdlib).
+Across every language (`MJS`, `Go`, `Rust`, `C++`, `Zig`, `Java`, `Python 3`, `C#`, `Kotlin`), imports/includes at the top of every source file are strictly grouped into three explicit tiers:
+1. **`1p` (First-Party / Standard Library):** Core language & OS runtime standard library (`node:*`, Go stdlib, Rust `core::`/`std::`, C++ `<cstdint>`/STL, Zig `@import("std")`, Java `java.*`, Python stdlib, .NET `System.*`, Kotlin `kotlin.*`/`java.*`).
 2. **`2p` (Second-Party / Internal & Sibling `lib-*`):** Modules within this repository or sibling `lib-*` / `underwyrt` Free Software libraries.
 3. **`3p` (Third-Party / Statically Vendored):** Audited, GPLv3-compatible static dependencies vendored under `src-<lang>.dev/3p/`.

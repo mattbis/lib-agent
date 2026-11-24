@@ -1,0 +1,19 @@
+#!/usr/bin/env agent-fastpass
+#:: LIBAG_KT_SPEC v3.0 :: SRC_KT_FASTPASS [TOK_OPT=MAX | FMT=AGENT_DSL]
+@meta{proj:lib-agent, lang:kotlin, compiler:k2_2.0+_jvm_native, channels:src-kt|src-kt.dev|src-kt.main|src-kt.testing, ns:libag_, lic:GPL-3.0-or-later, build_out:var/build/kt}
+@refs{human:res/src-kt/rules-fastpass.md, lic_spec:res/agent/current/01-license-freesoftware.agent.txt, suggested:doc/suggested/kt-style.md, jump:doc/agent-jump-table.md}
+
+#:: JUMP_VECTOR [id | slot | agent_spec | human_spec | target_doc]
+01 | LIC  | res/agent/current/01-license-freesoftware.agent.txt | res/agent/current/01-license-freesoftware.md | LICENSE
+02 | ETH  | res/agent/current/02-architecture-ethos.agent.txt   | res/agent/current/02-architecture-ethos.md   | doc/TODO.md
+03 | TOP  | res/agent/current/03-topology-var.agent.txt         | res/agent/current/03-topology-var.md         | doc/agent-jump-table.md
+18 | KT   | res/src-kt/rules-fastpass.agent.txt                 | res/src-kt/rules-fastpass.md                 | doc/suggested/kt-style.md
+
+#:: KERNEL_AXIOMS [SRC_KT_CONSTRAINTS — VIOLATION == HALT]
+!01.LIC :: spdx_hdr == `// SPDX-License-Identifier: GPL-3.0-or-later` && release == ALWAYS(GNU_GPL_v3)
+!02.MOD :: subset == ORTHODOX_K2(`@JvmInline value class`, `data class`, `sealed interface`) && !dsl_magic && !operator_overload_soup && !not_null_bang(`!!`)
+!03.MEM :: hot_paths == `@JvmInline value class`|primitive_arrays(`ByteArray`,`LongArray`) && monetary == `BigDecimal(explicit_MathContext)`|`Long_micros` (!`Float`|!`Double`)
+!04.CON :: coroutines == STRUCTURED_CONCURRENCY(`CoroutineScope`) && NEVER(`GlobalScope`) && !unbounded_channel_buffers
+!05.DEP :: imports == [// 1p (`kotlin.*`,`java.*`), // 2p (`org.libagent.*`), // 3p (static `src-kt.dev/3p/`)] && !wildcard_imports && !maven_sprawl
+!06.SYN :: indent == 4_SP && explicit_api_types == REQUIRED && files == `Libag<PascalCase>.kt`
+!07.OUT :: classes_jars_klib == `var/build/kt/` (!scattered `build/`, `.gradle/`, or `.kotlin/` in `src-kt*`)

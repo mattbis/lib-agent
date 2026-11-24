@@ -10,7 +10,7 @@
 ## 1. Universal Free Software Mandate (`GPLv3`)
 
 - **Always Released as GNU GPL Version 3:**
-    - We are Free Software ("free as in freedom"). All code, libraries, tools, scripts, and templates authored across `lib-agent`, `underwyrt`, and sibling `lib-*` repositories—across **every language** (`src-mjs`, `src-go`, `src-rs`, `src-cpp`, `src-zig`, `src-java`, `src-py3`, `src-cs`)—are **always released under the GNU General Public License Version 3 (`GPL-3.0-or-later`)**.
+    - We are Free Software ("free as in freedom"). All code, libraries, tools, scripts, and templates authored across `lib-agent`, `underwyrt`, and sibling `lib-*` repositories—across **every language** (`src-mjs`, `src-go`, `src-rs`, `src-cpp`, `src-zig`, `src-java`, `src-py3`, `src-cs`, `src-kt`)—are **always released under the GNU General Public License Version 3 (`GPL-3.0-or-later`)**.
     - Every user and downstream recipient is guaranteed the four essential software freedoms: to run, study, redistribute, and distribute modified versions of the program under the same copyleft terms.
 - **Root `LICENSE` File:**
     - Every repository must maintain a root [`LICENSE`](../../../LICENSE) file containing the full GNU GPLv3 text.
@@ -20,7 +20,7 @@
 
 ## 2. Source Headers & Package Metadata Across Languages
 
-- **C-Style Comment Languages (`.mjs`, `.go`, `.rs`, `.cpp`, `.hpp`, `.zig`, `.java`):**
+- **C-Style Comment Languages (`.mjs`, `.go`, `.rs`, `.cpp`, `.hpp`, `.zig`, `.java`, `.cs`, `.kt`, `.kts`):**
     ```text
     // SPDX-License-Identifier: GPL-3.0-or-later
     // Copyright (C) Matthew & Contributors — Free Software (GNU GPLv3)
