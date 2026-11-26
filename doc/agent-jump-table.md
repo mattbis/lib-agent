@@ -5,6 +5,7 @@
 #### universal human index: [`res/agent/current/rules-fastpass.md`](../res/agent/current/rules-fastpass.md)
 #### architectural roadmap: [`doc/TODO.md`](TODO.md)
 #### suggested language guides: [`doc/suggested/README.md`](suggested/README.md)
+#### behavioral prompts: [`doc/prompts/README.md`](prompts/README.md)
 #### license: GNU General Public License Version 3 (`GPLv3` — Free Software)
 
 ---
@@ -16,6 +17,7 @@
 | `01` | `LIC` | **Free Software & Licensing (`GPLv3`)** | [`01-license-freesoftware.agent.txt`](../res/agent/current/01-license-freesoftware.agent.txt) | [`01-license-freesoftware.md`](../res/agent/current/01-license-freesoftware.md) | [`LICENSE`](../LICENSE) | Always release all code across every language under **GNU GPLv3** (`GPL-3.0-or-later`); `3p` code must be GPLv3-compatible Free Software. |
 | `02` | `ETH` | **Forever-Code & Static Dependency Ethos** | [`02-architecture-ethos.agent.txt`](../res/agent/current/02-architecture-ethos.agent.txt) | [`02-architecture-ethos.md`](../res/agent/current/02-architecture-ethos.md) | [`doc/TODO.md`](TODO.md) | Zero supply-chain roulette; static `3p/` vendoring; `1p/2p/3p` import tiers; tight scope; never a "big ball of mud". |
 | `03` | `TOP` | **Multi-Language Channels & `var/` Outputs** | [`03-topology-var.agent.txt`](../res/agent/current/03-topology-var.agent.txt) | [`03-topology-var.md`](../res/agent/current/03-topology-var.md) | [`doc/TODO.md`](TODO.md) | Isolate code into `src-<lang>.{dev,main,testing}`; route all outputs to `var/build`, `var/dist`, and `var/release`. |
+| `04` | `CRT` | **Epistemic Critique & Pre-Action Gate** | [`04-epistemic-critique.agent.txt`](../res/agent/current/04-epistemic-critique.agent.txt) | [`04-epistemic-critique.md`](../res/agent/current/04-epistemic-critique.md) | [`doc/prompts/self-critical-agent.md`](prompts/self-critical-agent.md) | Evaluate whether a request is a good idea before acting; reject sycophancy; falsify own draft & expose sharp trade-offs. |
 
 ---
 

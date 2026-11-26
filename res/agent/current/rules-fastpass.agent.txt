@@ -1,12 +1,13 @@
 #!/usr/bin/env agent-fastpass
 #:: LIBAG_EMPIRE_SPEC v3.0 :: UNIVERSAL_AGNOSTIC_INDEX [TOK_OPT=MAX | FMT=AGENT_DSL]
 @meta{proj:lib-agent, ns:libag_, lic:GPL-3.0-or-later, ethos:FREE_SOFTWARE_FOREVER_CODE, root_lic:LICENSE}
-@refs{human:res/agent/current/rules-fastpass.md, jump:doc/agent-jump-table.md, todo:doc/TODO.md, suggested:doc/suggested/README.md}
+@refs{human:res/agent/current/rules-fastpass.md, jump:doc/agent-jump-table.md, todo:doc/TODO.md, suggested:doc/suggested/README.md, prompts:doc/prompts/README.md}
 
 #:: JUMP_VECTOR [id | slot | agent_spec | human_spec | target_doc]
 01 | LIC  | res/agent/current/01-license-freesoftware.agent.txt | res/agent/current/01-license-freesoftware.md | LICENSE
 02 | ETH  | res/agent/current/02-architecture-ethos.agent.txt   | res/agent/current/02-architecture-ethos.md   | doc/TODO.md
 03 | TOP  | res/agent/current/03-topology-var.agent.txt         | res/agent/current/03-topology-var.md         | doc/agent-jump-table.md
+04 | CRT  | res/agent/current/04-epistemic-critique.agent.txt   | res/agent/current/04-epistemic-critique.md   | doc/prompts/self-critical-agent.md
 10 | MJS  | res/src-mjs/rules-fastpass.agent.txt                | res/src-mjs/rules-fastpass.md                | doc/suggested/llm-guardrails.md
 11 | GO   | res/src-go/rules-fastpass.agent.txt                 | res/src-go/rules-fastpass.md                 | doc/suggested/go-style.md
 12 | RS   | res/src-rs/rules-fastpass.agent.txt                 | res/src-rs/rules-fastpass.md                 | doc/suggested/rust-style.md
@@ -22,3 +23,4 @@
 !02.ETH :: forever_code == TRUE && deps == STATIC_3P_ONLY(!remote_pkg_roulette) && import_tiers == [1p, 2p, 3p] && !ball_of_mud
 !03.TOP :: channels == `src-{mjs,go,rs,cpp,zig,java,py3,cs,kt}.{dev,main,testing}` && artifacts == `var/{build,dist,release}` (!root_splatter)
 !04.LLM :: obey(`doc/suggested/llm-guardrails.md`) |> zero unrequested deps, zero architecture drift, preserve `.dev` stubs
+!05.CRT :: obey(`doc/prompts/self-critical-agent.md`) |> evaluate_if_good_idea_before_acting && truth > appeasement && falsify_own_draft

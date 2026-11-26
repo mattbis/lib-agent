@@ -78,5 +78,6 @@ lib-agent/
 └── doc/
     ├── agent-jump-table.md          # Master concern & multi-language jump table
     ├── TODO.md                      # Architectural roadmap & language notes
+    ├── prompts/                     # Reusable epistemic & behavioral agent prompts
     └── suggested/                   # Google-inspired & anti-LLM-mess rules for each language
 ```
